@@ -27,25 +27,13 @@ class _WelcomePageStepeState extends State<WelcomePageStep> {
     });
   }
 
-  var ques = [
-    'Journal everyday with Zine, the way you do it on a physical journal',
-    'Choose your mood for the day. Set colors according to your choice.',
-    'Set daily reminders to journal your day every night.',
-    'Get an year-end progress report of your moods'
-  ];
 
-  var icons = [
-    Icons.book,
-    Icons.book_sharp,
-    Icons.timer,
-    Icons.calendar_today_sharp
-  ];
-
-  var data = [
-    ['Journal everyday with Zine, the way you do it on a physical journal', Icons.book],
-    ['Choose your mood for the day. Set colors according to your choice.', Icons.book],
-    ['Set daily reminders to journal your day every night.', Icons.timer],
-    [ 'Get an year-end progress report of your moods', Icons.calendar_today_sharp]               
+  var data = [   
+    ['Journal.ly', Icons.star, true ],
+    ['Journal everyday with Zine, the way you do it on a physical journal', Icons.book, false],
+    ['Choose your mood for the day. Set colors according to your choice.', Icons.circle, false],
+    ['Set daily reminders to journal your day every night.', Icons.timer, false],
+    [ 'Get an year-end progress report of your moods', Icons.calendar_today, false]               
   ];
 
   @override
@@ -56,8 +44,8 @@ class _WelcomePageStepeState extends State<WelcomePageStep> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children:  <Widget>[
-          HomePageData(ques[i], icons[i]),
+        children:  <Widget>[                
+          HomePageData(data[i][0] as String, data[i][1] as IconData, data[i][2] as bool),
           ElevatedButton(                
             onPressed: next, 
             child: Row(
@@ -97,10 +85,10 @@ class _WelcomePageStepeState extends State<WelcomePageStep> {
                         color: Colors.white,
                       ),
                     ),
-                  ),                  
+                  ),
                 ],
-              ),      
-            )                 
+              ), 
+            )
         ],
       ),
     );
@@ -113,8 +101,35 @@ class HomePageData extends StatelessWidget {
 
   final IconData icon;
 
-  const HomePageData(this.title, this.icon, {Key? key}) : super(key: key);
-  
+  final bool heading;
+
+  const HomePageData(this.title, this.icon, this.heading, {Key? key}) : super(key: key);
+
+  List<Widget> HomePageWidget(icon, title, heading) {
+    if(heading) {
+      return [const Padding(
+      padding: EdgeInsets.all(10), 
+      child: 
+        Text('Journal.ly', style: TextStyle(fontSize: 36, color: Colors.white, shadows: [Shadow(offset: Offset(2, 3), blurRadius: 25) ]  ),)
+      )];
+    }
+    else {
+      return <Widget>[
+        Icon(icon, size: 72, color: Colors.white,), 
+        Padding(
+                padding: const EdgeInsets.all(10), 
+                child: Text(              
+                  title,              
+                  softWrap: true,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Colors.white, fontFamily: 'RaleWay', fontWeight: FontWeight.w400, fontSize: 18),
+                ),
+              )    
+      ];
+    }
+  } 
+
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -122,15 +137,7 @@ class HomePageData extends StatelessWidget {
       height: 192,
       child: Center(
         child: Column(        
-          children: [      
-            Icon(icon, size: 72, color: Colors.white,),
-            Padding(padding: const EdgeInsets.all(10), child: Text(              
-              title,              
-              softWrap: true,
-              textAlign: TextAlign.center,
-              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w400, fontSize: 18),
-            ),)            
-          ]
+          children: HomePageWidget(icon, title, heading)
         ),
       )      
     );

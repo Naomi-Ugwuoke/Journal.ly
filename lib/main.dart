@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-import './welcomePageSteps.dart';
+import 'welcome_page_steps.dart';
 
 void main() =>  runApp(const MyApp());
 
@@ -12,18 +12,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build (BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Journal.ly',
       home: WelcomePage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
 
-class WelcomePage extends StatelessWidget {
+class WelcomePage extends StatelessWidget {  
 
-  var i = 0;
-
-  WelcomePage({Key? key}) : super(key: key);
+  const WelcomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +42,4 @@ class WelcomePage extends StatelessWidget {
       ),
     );
   }
-  
-
 }
