@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -49,6 +56,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  CollectionReference testRef =
+      FirebaseFirestore.instance.collection('TestCounter');
 
   void _incrementCounter() {
     setState(() {
@@ -59,6 +68,14 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
+    addCount(_counter);
+  }
+
+  Future<void> addCount(int count) {
+    return testRef
+        .add({'count': count})
+        .then((value) => print("Count added"))
+        .catchError((error) => print("Failed to add user: $error"));
   }
 
   @override
