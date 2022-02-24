@@ -1,8 +1,11 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'welcome_page_steps.dart';
+
+
 
 void main() =>  runApp(const MyApp());
 
@@ -12,9 +15,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build (BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Journal.ly',
-      home: WelcomePage(),
+      home: const WelcomePage(),
+      theme: ThemeData(
+        textTheme: GoogleFonts.ralewayTextTheme(Theme.of(context).textTheme)
+      ),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -26,8 +32,8 @@ class WelcomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
+    return Scaffold(      
+      body: SafeArea(        
         child: Container(
           width: double.infinity,
           decoration: const BoxDecoration(
