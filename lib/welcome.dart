@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(const Welcome());
-
-
 class Welcome extends StatelessWidget {
   const Welcome({Key? key}) : super(key: key);
 
@@ -14,11 +11,7 @@ class Welcome extends StatelessWidget {
           title: const Text('Welcome'),
           centerTitle: true,
         ),
-        body: Column(
-          children: const <Widget>[
-            Text('Login'),
-            Text('Register')
-          ]),
+        body: Column(children: const <Widget>[Text('Login'), Text('Register')]),
       ),
     );
   }

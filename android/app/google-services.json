@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "352269718646",
+    "project_id": "the-bug-chasers",
+    "storage_bucket": "the-bug-chasers.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:352269718646:android:2a4016d55adc026e403b57",
+        "android_client_info": {
+          "package_name": "com.example.the_bug_chasers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "352269718646-qauijj10onsl8fc7tv5cbvc8g34g1250.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDh7a5IqvtuMJ-0gRZF4lhLTYhYVjedy4Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "352269718646-qauijj10onsl8fc7tv5cbvc8g34g1250.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "352269718646-srheiusn8if6baola3de3t5j0l491lqg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.theBugChasers"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
