@@ -123,8 +123,7 @@ class _WelcomePageStepeState extends State<WelcomePageStep> {
                 Padding(
                   padding: EdgeInsets.all(10), 
                   child: 
-                  Text('Journal.ly', 
-                    style: TextStyle(fontSize: 36,  color: Colors.white, shadows: [Shadow(offset: Offset(1, 2), blurRadius: 17) ]  ),)
+                    Text('journal.ly', style: TextStyle(color: Colors.white, fontSize: 42, fontWeight: FontWeight.bold),),                  
                 )            
               ]
             ),
@@ -136,7 +135,38 @@ class _WelcomePageStepeState extends State<WelcomePageStep> {
   }
 
   Widget homeScreen() {
-    
+    return Container(
+      width: double.infinity,
+      height: MediaQuery.of(context).size.height * 0.92,
+      child: Column(
+        children: [
+          Container(
+            height: MediaQuery.of(context).size.height * 0.70,
+            alignment: Alignment.center,
+            child: const Text('journal.ly', style: TextStyle(color: Colors.white, fontSize: 42, fontWeight: FontWeight.bold),),
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height * 0.22,
+            width: double.infinity,
+            padding: const EdgeInsets.only(top: 15, bottom: 15),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15)),
+              boxShadow: [BoxShadow(color: Color.fromARGB(221, 58, 57, 57), offset: Offset(0, -1), blurRadius: 35)]              
+            ),
+            child: Column(              
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: const [                
+                ElevatedButton(onPressed: null, child: Text('Login')),
+                Text('Already registered?'),
+                TextButton(child: Text('Register'), onPressed: null,)
+              ],
+            ),
+          )
+        ],
+      ),
+    );
   }
 
   @override
