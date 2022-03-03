@@ -10,6 +10,7 @@ class HomePage extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Home Page'),
           centerTitle: true,
+          backgroundColor: const Color(0xff2c4251),
         ),
       ),
     );

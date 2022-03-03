@@ -10,6 +10,7 @@ class JournalPage extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Journal Page'),
           centerTitle: true,
+          backgroundColor: const Color(0xff28587b),
         ),
       ),
     );

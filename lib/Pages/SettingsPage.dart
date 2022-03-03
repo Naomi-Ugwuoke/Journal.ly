@@ -10,6 +10,7 @@ class SettingsPage extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Settings Page'),
           centerTitle: true,
+          backgroundColor: const Color(0xff3b3b58),
         ),
       ),
     );
