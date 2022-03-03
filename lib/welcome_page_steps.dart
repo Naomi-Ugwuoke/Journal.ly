@@ -119,11 +119,11 @@ class _WelcomePageStepeState extends State<WelcomePageStep> {
             child: Column(        
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 Padding(
-                  padding: EdgeInsets.all(10), 
+                  padding: const EdgeInsets.all(10), 
                   child: 
-                    Text('journal.ly', style: TextStyle(color: Colors.white, fontSize: 42, fontWeight: FontWeight.bold),),                  
+                    logoText()
                 )            
               ]
             ),
@@ -132,6 +132,15 @@ class _WelcomePageStepeState extends State<WelcomePageStep> {
         navButtons('steps')
       ],
     );
+  }
+
+  Widget logoText() {
+    return const Text('journal.ly', 
+      style: TextStyle(
+        color: Colors.white, 
+        fontSize: 42, 
+        fontWeight: FontWeight.bold, 
+        shadows: [Shadow(color: Color.fromARGB(255, 39, 38, 38), offset: Offset(1, 2), blurRadius: 10),]), );
   }
 
   Widget homeScreen() {
@@ -143,7 +152,7 @@ class _WelcomePageStepeState extends State<WelcomePageStep> {
           Container(
             height: MediaQuery.of(context).size.height * 0.70,
             alignment: Alignment.center,
-            child: const Text('journal.ly', style: TextStyle(color: Colors.white, fontSize: 42, fontWeight: FontWeight.bold),),
+            child: logoText()
           ),
           Container(
             height: MediaQuery.of(context).size.height * 0.22,
@@ -152,7 +161,7 @@ class _WelcomePageStepeState extends State<WelcomePageStep> {
             decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15)),
-              boxShadow: [BoxShadow(color: Color.fromARGB(221, 58, 57, 57), offset: Offset(0, -1), blurRadius: 35)]              
+              boxShadow: [BoxShadow(color: Color.fromARGB(221, 87, 85, 85), offset: Offset(0, -1), blurRadius: 25)]              
             ),
             child: Column(              
               crossAxisAlignment: CrossAxisAlignment.center,
