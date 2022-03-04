@@ -1,17 +1,90 @@
 import 'package:flutter/material.dart';
+import 'HomePage.dart';
+class LoginPage extends StatefulWidget {
+  const LoginPage({ Key? key }) : super(key: key);
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+
+  final Color _themeColor = const Color(0xff4e598c);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Welcome'),
-          centerTitle: true,
-        ),
-        body: Column(children: const <Widget>[Text('Login'), Text('Register')]),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Journal.ly'),
+        centerTitle: true,        
+        backgroundColor: _themeColor,
+      ),                  
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: SingleChildScrollView(
+          child: Column(                        
+            children: <Widget>[
+              const SizedBox(height: 50,),
+              const Padding(
+                padding:  EdgeInsets.symmetric(horizontal: 2, vertical: 10),
+                child:  Text('Login',
+                  style: TextStyle(fontSize: 32,),
+                ),
+              ),
+              const SizedBox(height: 50,),
+              const Padding(              
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                child: TextField(
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Email',
+                      hintText: 'abc@xyz.com'),
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(
+                    left: 15.0, right: 15.0, top: 15, bottom: 0),
+                //padding: EdgeInsets.symmetric(horizontal: 15),
+                child: TextField(
+                  obscureText: true,
+                  enableSuggestions: false,
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Password',
+                      hintText: 'Enter secure password'),
+                ),
+              ),
+              TextButton(
+                onPressed: null,
+                child: Text(
+                  'Forgot Password',
+                  style: TextStyle(color: _themeColor, fontSize: 15),
+                ),
+              ),
+              Container(
+                height: 50,
+                width: 250,
+                decoration: BoxDecoration(
+                    color: _themeColor, borderRadius: BorderRadius.circular(20)),
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: (_) => const HomePage()));
+                  },
+                  child: const Text(
+                    'Login',
+                    style: TextStyle(color: Colors.white, fontSize: 25),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 130,
+              ),
+              const Text('New User? Create Account')
+            ],
+          )
+        ) 
       ),
     );
   }

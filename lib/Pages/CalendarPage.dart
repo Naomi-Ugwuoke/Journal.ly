@@ -8,7 +8,7 @@ class CalendarPage extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Calendar Page'),
+          title: const Text('Calendar'),
           centerTitle: true,
           backgroundColor: const Color(0xff28112b),
         ),
