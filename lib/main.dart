@@ -7,6 +7,7 @@ import 'package:the_bug_chasers/Pages/LoginPage.dart';
 import 'package:the_bug_chasers/Pages/SettingsPage.dart';
 import 'firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,9 +24,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: _title,
-      home: MyStatefulWidget(),
+      theme: ThemeData(textTheme: GoogleFonts.montserratTextTheme(Theme.of(context).textTheme)),
+      debugShowCheckedModeBanner: false,
+      home: const MyStatefulWidget()      
     );
   }
 }
@@ -55,16 +58,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
+    return Scaffold(      
+      body: Center(        
         child: _widgetOptions.elementAt(_selectedIndex),
-      ),
+      ),      
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Home',
+            label: 'Home',            
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.book),

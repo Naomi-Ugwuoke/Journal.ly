@@ -10,6 +10,7 @@ class CalendarPage extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Calendar Page'),
           centerTitle: true,
+          backgroundColor: const Color(0xff28112b),
         ),
       ),
     );
