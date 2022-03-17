@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:the_bug_chasers/Pages/RegisterPage.dart';
 import 'HomePage.dart';
 class LoginPage extends StatefulWidget {
   const LoginPage({ Key? key }) : super(key: key);
@@ -81,7 +82,21 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(
                 height: 130,
               ),
-              const Text('New User? Create Account')
+              OutlinedButton(
+                onPressed: (() {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const Register()));          
+                }), 
+                child: const Padding(
+                  padding:  EdgeInsets.all(10.0),
+                  child:  Text('Register'),
+                ),
+                style: ButtonStyle(shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18),
+                    side: const BorderSide(color: Colors.white)            
+                  )
+                )),
+              )
             ],
           )
         ) 

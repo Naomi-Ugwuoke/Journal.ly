@@ -1,8 +1,4 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:the_bug_chasers/Pages/WelcomeScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:the_bug_chasers/Pages/CalendarPage.dart';
 import 'package:the_bug_chasers/Pages/HomePage.dart';
@@ -11,8 +7,7 @@ import 'package:the_bug_chasers/Pages/LoginPage.dart';
 import 'package:the_bug_chasers/Pages/SettingsPage.dart';
 import 'firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-
+import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,36 +20,15 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  static const String _title = 'Journal.ly';
-
-  @override
-  Widget build (BuildContext context) {
-    return MaterialApp(
-      title: _title,
-      home: WelcomePage(),
-      theme: ThemeData(
-        textTheme: GoogleFonts.montserratTextTheme(Theme.of(context).textTheme)
-      ),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
-
-class WelcomePage extends StatelessWidget {  
-
-  WelcomePage({Key? key}) : super(key: key);
-
-  bool _isLoggedIn = false;
+  static const String _title = 'Journal.ly';  
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(      
-      body: SafeArea(        
-        child: Container(
-          width: double.infinity,                    
-          child: _isLoggedIn ? const MyStatefulWidget() : const WelcomeScreen()
-        ),
-      ),
+    return MaterialApp(
+      title: _title,
+      theme: ThemeData(textTheme: GoogleFonts.montserratTextTheme(Theme.of(context).textTheme)),
+      debugShowCheckedModeBanner: false,
+      home: const MyStatefulWidget()      
     );
   }
 }
@@ -68,6 +42,8 @@ class MyStatefulWidget extends StatefulWidget {
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _selectedIndex = 0;  
+
+  bool _loggedIn = true;
 
   static const List<Widget> _widgetOptions = <Widget>[
     HomePage(),
@@ -84,7 +60,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(      
+    return _loggedIn ? Scaffold(      
       body: Center(        
         child: _widgetOptions.elementAt(_selectedIndex),
       ),      
@@ -112,7 +88,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         selectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,
       ),
-    );
+    ) : const LoginPage();
   }
 }
-
