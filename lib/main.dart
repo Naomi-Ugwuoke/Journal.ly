@@ -44,7 +44,7 @@ class WelcomePage extends StatelessWidget {
 
   WelcomePage({Key? key}) : super(key: key);
 
-  bool _isLoggedIn = false;
+  bool _isLoggedIn = true;
 
   @override
   Widget build(BuildContext context) {
