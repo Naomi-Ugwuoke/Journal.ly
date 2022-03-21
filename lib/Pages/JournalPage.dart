@@ -5,14 +5,12 @@ class JournalPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: const Text('Journal Page'),
           centerTitle: true,
           backgroundColor: const Color(0xff28587b),
-        ),
-      ),
+        ),     
     );
   }
 }

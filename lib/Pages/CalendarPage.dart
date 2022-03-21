@@ -5,14 +5,12 @@ class CalendarPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
-          title: const Text('Calendar Page'),
+          title: const Text('Calendar'),
           centerTitle: true,
           backgroundColor: const Color(0xff28112b),
         ),
-      ),
     );
   }
 }
