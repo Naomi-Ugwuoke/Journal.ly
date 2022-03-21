@@ -11,6 +11,12 @@ class SettingsPage extends StatelessWidget {
           centerTitle: true,
           backgroundColor: const Color(0xff3b3b58),
         ),
+        body: Container(
+          width: double.infinity,
+          child: Column(children: [
+            
+          ]),
+        ),
     );
   }
 }
