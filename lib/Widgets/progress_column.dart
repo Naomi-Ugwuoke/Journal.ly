@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:the_bug_chasers/Pages/CalendarPage.dart';
 import 'package:the_bug_chasers/Widgets/progress_column_day_widget.dart';
 
 class ProgressColumn extends StatefulWidget {
@@ -50,7 +51,14 @@ class _ProgressColumnState extends State<ProgressColumn> {
               color: Color(0xffcecece),
               borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10))
             ),
-            child: const Text('View All ', style: TextStyle(fontWeight: FontWeight.bold),)
+            child: InkWell(
+              child: const Text('View All ', style: TextStyle(fontWeight: FontWeight.bold),) ,
+              onTap: () {
+                Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => const CalendarPage(),)
+                );
+              },
+            )
           )
         ],
       ),

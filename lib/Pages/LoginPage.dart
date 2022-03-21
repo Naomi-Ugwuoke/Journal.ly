@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:the_bug_chasers/Pages/MainPage.dart';
 import 'package:the_bug_chasers/Pages/RegisterPage.dart';
-import 'HomePage.dart';
 class LoginPage extends StatefulWidget {
   const LoginPage({ Key? key }) : super(key: key);
 
@@ -71,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: TextButton(
                   onPressed: () {
                     Navigator.push(
-                        context, MaterialPageRoute(builder: (_) => const HomePage()));
+                        context, MaterialPageRoute(builder: (context) => const MyStatefulWidget()));
                   },
                   child: const Text(
                     'Login',
