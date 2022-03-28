@@ -38,7 +38,7 @@ class WelcomePage extends StatelessWidget {
 
   const WelcomePage({Key? key}) : super(key: key);
 
-  final bool _isLoggedIn = true;
+  final bool _isLoggedIn = false;
 
   @override
   Widget build(BuildContext context) {
