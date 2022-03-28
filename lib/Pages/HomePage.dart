@@ -22,7 +22,8 @@ class HomePage extends StatelessWidget {
             ProgressColumn(),
             SizedBox(height: 30,)
           ],
-      )),
+      )
+      ),
     );
   }
 }
