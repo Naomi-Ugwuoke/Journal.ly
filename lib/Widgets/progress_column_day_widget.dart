@@ -4,7 +4,9 @@ class ProgressColumnDayWidget extends StatelessWidget {
 
   final Color dayColor;  
 
-  const ProgressColumnDayWidget({ Key? key, required this.dayColor }) : super(key: key);
+  final DateTime date;
+
+  const ProgressColumnDayWidget({ Key? key, required this.dayColor, required this.date }) : super(key: key);
   
 
   @override
@@ -21,7 +23,7 @@ class ProgressColumnDayWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(DateTime.now().month.toString() + "/" + DateTime.now().day.toString()),          
+          Text(date.month.toString() + "/" + date.day.toString()),          
           const SizedBox(height: 5),
           const Icon(Icons.check, size: 40,)
         ],  

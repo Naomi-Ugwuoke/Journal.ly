@@ -15,7 +15,7 @@ class _ProgressColumnState extends State<ProgressColumn> {
     return Container(      
       height: 190,
       decoration: BoxDecoration(
-        color: const Color(0xffefefef),
+        color: const Color(0xffffffff),
         border: Border.all(width: 1, color: const Color(0xffeeeeee)),
         borderRadius: const BorderRadius.all(Radius.circular(10)),
         boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 4.0, offset: Offset(2, 3))]
@@ -33,10 +33,10 @@ class _ProgressColumnState extends State<ProgressColumn> {
                 Row(
                   // crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: const [              
-                    ProgressColumnDayWidget(dayColor: Color(0xfffefefe)),              
-                    ProgressColumnDayWidget(dayColor: Color(0xff788aa3)),              
-                    ProgressColumnDayWidget(dayColor: Color(0xff7d84b2)),              
+                  children: [              
+                    ProgressColumnDayWidget(dayColor: const Color(0xffcccccc), date: DateTime.now(),),              
+                    ProgressColumnDayWidget(dayColor: const Color(0xff788aa3), date: DateTime.now(),),              
+                    ProgressColumnDayWidget(dayColor: const Color(0xff7d84b2), date: DateTime.now(),),              
                   ]
                 ),
               ],
@@ -48,7 +48,7 @@ class _ProgressColumnState extends State<ProgressColumn> {
             height: 36,
             alignment: Alignment.center,
             decoration: const BoxDecoration(
-              color: Color(0xffcecece),
+              color: Color(0xfff0Edee),
               borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10))
             ),
             child: InkWell(

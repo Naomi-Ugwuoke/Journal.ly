@@ -13,6 +13,10 @@ class _RegisterState extends State<Register> {
 
   final Color _themeColor = const Color(0xff02394a);
 
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,39 +39,46 @@ class _RegisterState extends State<Register> {
                 ),
               ),
               const SizedBox(height: 50,),
-              const Padding(              
-                padding: EdgeInsets.symmetric(horizontal: 15),
+              Padding(              
+                padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: TextField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Email',
-                      hintText: 'abc@xyz.com'),
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Email',
+                    hintText: 'abc@xyz.com'
+                  ),
+                  controller: emailController,
+
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.only(
+              Padding(
+                padding: const EdgeInsets.only(
                     left: 15.0, right: 15.0, top: 15, bottom: 0),
                 //padding: EdgeInsets.symmetric(horizontal: 15),
                 child: TextField(
                   obscureText: true,
                   enableSuggestions: false,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Password',
-                      hintText: 'Enter secure password'),
+                  decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                    labelText: 'Password',
+                    hintText: 'Enter secure password'
+                  ),
+                  controller: passwordController,
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.only(
+              Padding(
+                padding: const EdgeInsets.only(
                     left: 15.0, right: 15.0, top: 15, bottom: 0),
                 //padding: EdgeInsets.symmetric(horizontal: 15),
                 child: TextField(
                   obscureText: true,
                   enableSuggestions: false,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Confirm Password',
-                      hintText: 'Enter the password again'),
+                  decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                    labelText: 'Confirm Password',
+                    hintText: 'Enter the password again'
+                  ),
+                  controller: confirmPasswordController,
                 ),
               ),
               const SizedBox(height: 20,),
@@ -79,7 +90,7 @@ class _RegisterState extends State<Register> {
                 child: TextButton(
                   onPressed: () {
                     Navigator.push(
-                        context, MaterialPageRoute(builder: (context) => const MyStatefulWidget()));
+                        context, MaterialPageRoute(builder: (context) => const LoginPage()));
                   },
                   child: const Text(
                     'Register',
