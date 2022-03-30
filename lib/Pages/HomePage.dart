@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:the_bug_chasers/Pages/JournalPage.dart';
 import 'package:the_bug_chasers/Widgets/progress_column.dart';
+import 'package:provider/provider.dart';
+import 'package:the_bug_chasers/User/AppState.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -36,9 +38,9 @@ class HomePage extends StatelessWidget {
                       children: [
                         TextButton(                        
                           onPressed: () {
-                            Navigator.push(context,
-                              MaterialPageRoute(builder: (context)=> const JournalPage())
-                            );
+                           final AppState appState = Provider.of<AppState>(context, listen: false);
+                           appState.visiblePageIndex = 1;
+                          //  print(profile.visiblePageIndex);
                           }, 
                           child: const Text('Write Now!'))
                       ],

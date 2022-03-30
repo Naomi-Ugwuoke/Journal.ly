@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:the_bug_chasers/Pages/LoginPage.dart';
-import 'package:the_bug_chasers/Pages/MainPage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:provider/provider.dart';
+// import 'package:the_bug_chasers/User/Profile.dart';
 
 class Register extends StatefulWidget {
   const Register({ Key? key }) : super(key: key);
@@ -16,6 +18,53 @@ class _RegisterState extends State<Register> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+
+  bool errorOccured = false;
+  var regError = '';
+
+  Future<void> registerUser() async {
+
+    var email = emailController.text;
+    var pass = passwordController.text;
+    var confirmPass = confirmPasswordController.text;  
+
+  
+
+    if(email.isNotEmpty && pass.isNotEmpty && confirmPass.isNotEmpty && pass == confirmPass) {
+      try {
+        UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: email,
+          password: pass
+        );
+
+        User? user = FirebaseAuth.instance.currentUser;
+
+        if(user !=null) {          
+          // final Profile profile = Provider.of<Profile>(context, listen: false);
+          // profile.isAuthenticated = true;
+          Navigator.pushReplacement(context, 
+            MaterialPageRoute(builder: (context) => const LoginPage())
+          );
+        }
+        
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          errorOccured = true;
+          regError = 'Password weak';
+          // print('The password provided is too weak.');
+        } else if (e.code == 'email-already-in-use') {
+          // print('The account already exists for that email.');
+          errorOccured = true;
+          regError = 'User exists!';
+        }
+      } catch (e) {
+        errorOccured = true;
+        regError = e.toString();
+      }
+    }
+
+    
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,19 +137,15 @@ class _RegisterState extends State<Register> {
                 decoration: BoxDecoration(
                     color: _themeColor, borderRadius: BorderRadius.circular(20)),
                 child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context, MaterialPageRoute(builder: (context) => const LoginPage()));
-                  },
+                  onPressed: registerUser,
                   child: const Text(
                     'Register',
                     style: TextStyle(color: Colors.white, fontSize: 25),
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 50,
-              ),
+              if(errorOccured) SizedBox(height: 50, child: Text(regError),),              
+              if(!errorOccured) const SizedBox(height: 35,),
               TextButton(
                 onPressed: null,
                 child: Text(
@@ -110,7 +155,7 @@ class _RegisterState extends State<Register> {
               ),
               OutlinedButton(
                 onPressed: (() {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginPage()));          
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginPage()));                            
                 }), 
                 child: const Padding(
                   padding:  EdgeInsets.all(10.0),

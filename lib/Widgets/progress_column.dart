@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:the_bug_chasers/Pages/CalendarPage.dart';
 import 'package:the_bug_chasers/Widgets/progress_column_day_widget.dart';
+import 'package:provider/provider.dart';
+import 'package:the_bug_chasers/User/AppState.dart';
 
 class ProgressColumn extends StatefulWidget {
   const ProgressColumn({ Key? key }) : super(key: key);
@@ -54,9 +56,8 @@ class _ProgressColumnState extends State<ProgressColumn> {
             child: InkWell(
               child: const Text('View All ', style: TextStyle(fontWeight: FontWeight.bold),) ,
               onTap: () {
-                Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => const CalendarPage(),)
-                );
+                final AppState appState = Provider.of<AppState>(context, listen: false);
+                appState.visiblePageIndex = 2;
               },
             )
           )
