@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Profile extends ChangeNotifier {
   
   bool _isAuthenticated = false;
   bool _isVerified = false;  
+  String _uid = '';
+  String? name = '';
+  String? _email = '';
 
   bool get isAuthenticated {
     return _isAuthenticated;
@@ -23,6 +27,30 @@ class Profile extends ChangeNotifier {
     _isVerified = newStatus;
     notifyListeners();
   }    
+
+  String get userId {
+    return _uid;
+  }
+
+  set userId(String userId) {
+    _uid = userId;
+  }
+
+  String? get userEmail {
+    return _email;
+  }
+
+  set userEmail(String? email) {
+    _email = email;
+  }
+
+  String? get userName {
+    return name;
+  }
+
+  set userName(String? userNameInput) {
+    name = userNameInput;
+  }
 
   logout() {
     _isAuthenticated = false;

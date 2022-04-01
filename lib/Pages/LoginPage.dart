@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:the_bug_chasers/Pages/MainPage.dart';
 import 'package:the_bug_chasers/Pages/RegisterPage.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:the_bug_chasers/User/Profile.dart';
+import 'package:the_bug_chasers/main.dart';
 class LoginPage extends StatefulWidget {
   const LoginPage({ Key? key }) : super(key: key);
 
@@ -13,7 +15,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 
-  final Color _themeColor = const Color(0xff4e598c);
+  final Color _themeColor =const Color(0xff3b3b58);
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -22,8 +24,10 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> login() async {
 
-    errorOccured = false;
-    loginError = '';
+    setState(() {
+      errorOccured = false;
+      loginError = '';
+    });    
 
     var email = emailController.text;
     var pass = passwordController.text;
@@ -40,17 +44,33 @@ class _LoginPageState extends State<LoginPage> {
         if(user !=null) {          
           final Profile profile = Provider.of<Profile>(context, listen: false);
           profile.isAuthenticated = true;
+          profile.userId = user.uid;
+          profile.name = user.displayName;
+          profile.isVerified = user.emailVerified;
+          profile.userEmail = user.email;
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const MyApp(),));
         }
 
       } on FirebaseAuthException catch (e) {
         if (e.code == 'user-not-found') {
-          errorOccured = true;
-          loginError = 'User Not Found!';
+          setState(() {
+            errorOccured = true;
+            loginError = 'User Not Found!';  
+          });
+          
         } else if (e.code == 'wrong-password') {
-          errorOccured = true;
-          loginError = 'Wrong Email/Password combination.';
+
+          setState(() {
+            errorOccured = true;
+            loginError = 'Wrong Email/Password combination.';  
+          });
+          
         }
       }
+    }
+    else {
+      errorOccured = true;
+      loginError = 'Some values missing. Try again!';
     }
     
   }
@@ -106,9 +126,10 @@ class _LoginPageState extends State<LoginPage> {
               TextButton(
                 onPressed: null,
                 child: Text(
-                  'Forgot Password',
+                  'Forgot Password?',
                   style: TextStyle(color: _themeColor, fontSize: 15),
-                ),
+                  textAlign: TextAlign.right,
+                ),                
               ),
               Container(
                 height: 50,
@@ -118,20 +139,22 @@ class _LoginPageState extends State<LoginPage> {
                 child: TextButton(
                   onPressed: login,
                   child: const Text(
-                    'Login',
+                    'Sign In',
                     style: TextStyle(color: Colors.white, fontSize: 25),
                   ),
                 ),
               ),
-              if(errorOccured) SizedBox(height: 130, child: Text(loginError),),
-              if(!errorOccured) const SizedBox(height: 80,),
+              if(errorOccured) Container(alignment: Alignment.center, child: Text(loginError), height: 80,),
+              if(!errorOccured) const SizedBox(height: 50,),
+              const Text('Don\'t have an account?'),
+              const SizedBox(height: 20,),
               OutlinedButton(
                 onPressed: (() {
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const Register()));          
                 }), 
-                child: const Padding(
-                  padding:  EdgeInsets.all(10.0),
-                  child:  Text('Register'),
+                child: Padding(
+                  padding: const  EdgeInsets.all(10.0),
+                  child:  Text('Register', style: TextStyle(color: _themeColor),),
                 ),
                 style: ButtonStyle(shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
