@@ -120,7 +120,7 @@ class _CalendarPageState extends State<CalendarPage> {
   }
 
   getDayMoodMap() {
-    Map<DateTime, String> dayMoodMap = new Map<DateTime, String>();
+    Map<DateTime, String> dayMoodMap = <DateTime, String>{};
     Stream<QuerySnapshot> journals = firestore
         .collection('Users')
         .doc(userID)
@@ -132,6 +132,8 @@ class _CalendarPageState extends State<CalendarPage> {
       var date = DateTime.parse(['Date'].toString());
       dayMoodMap[date] = pageMap['Mood'].toString();
     });
+
+    return dayMoodMap;
   }
 
   getColorForDay(
