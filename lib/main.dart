@@ -25,11 +25,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: _title,
-      theme: ThemeData(textTheme: GoogleFonts.montserratTextTheme(Theme.of(context).textTheme)),
-      debugShowCheckedModeBanner: false,
-      home: const MyStatefulWidget()      
-    );
+        title: _title,
+        theme: ThemeData(
+            textTheme:
+                GoogleFonts.montserratTextTheme(Theme.of(context).textTheme)),
+        debugShowCheckedModeBanner: false,
+        home: const MyStatefulWidget());
   }
 }
 
@@ -45,8 +46,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   static const List<Widget> _widgetOptions = <Widget>[
     HomePage(),
-    JournalPage(),
-    CalendarPage(),
+    JournalPage(null),
+    CalendarPage(
+      userID: 'Q4hNhfhskzTAfSFnaaXQaEYlp9E3',
+    ),
     SettingsPage(),
   ];
 
@@ -58,16 +61,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(      
-      body: Center(        
+    return Scaffold(
+      body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
-      ),      
+      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Home',            
+            label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.book),
