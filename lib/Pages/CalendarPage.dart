@@ -4,20 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:the_bug_chasers/Pages/JournalPage.dart';
-
-import '../utils/CalendarUtils.dart';
+import 'package:the_bug_chasers/providers/dayColorProvider.dart';
+import '../Utils/DatabaseUtils.dart';
+import '../Utils/CalendarUtils.dart';
 
 class CalendarPage extends StatefulWidget {
-  final String userID;
-  const CalendarPage({required this.userID, Key? key}) : super(key: key);
+  final DayColorProvider provider;
+  const CalendarPage({required this.provider, Key? key}) : super(key: key);
 
   @override
-  _CalendarPageState createState() => _CalendarPageState(userID: userID);
+  _CalendarPageState createState() => _CalendarPageState(provider: provider);
 }
 
 class _CalendarPageState extends State<CalendarPage> {
-  final String userID;
-  _CalendarPageState({required this.userID});
+  final DayColorProvider provider;
+  _CalendarPageState({required this.provider});
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   late final PageController _pageController;
@@ -30,12 +31,12 @@ class _CalendarPageState extends State<CalendarPage> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   final RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.disabled;
 
-  Map<String, Color> _moodColors = {};
-  Color DEFAULT_COLOR = Colors.grey;
+  Map<DateTime, Color> _dayColors = {};
+  Color DEFAULT_COLOR = Colors.grey.withAlpha(148);
 
   @override
   void initState() {
-    getMoodColorMap();
+    //loadDayColorMap();
     super.initState();
   }
 
@@ -57,6 +58,8 @@ class _CalendarPageState extends State<CalendarPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Calendar'),
+        centerTitle: true,
+        backgroundColor: const Color(0xff28587b),
       ),
       body: Column(
         children: [
@@ -83,7 +86,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 return Container(
                   height: 48,
                   width: 48,
-                  color: getColorForDay(day, focusedDay, _moodColors),
+                  color: getColorForDay(day, focusedDay),
                   padding: const EdgeInsets.all(0.5),
                   alignment: Alignment.center,
                   child: Text(day.day.toString(),
@@ -100,47 +103,24 @@ class _CalendarPageState extends State<CalendarPage> {
     );
   }
 
-  getMoodColorMap() {
-    var userCollection = firestore.collection('Users');
-    userCollection.doc(userID).get().then((docSnapshot) {
-      if (docSnapshot.exists) {
-        Map<String, dynamic> data = docSnapshot.data()!;
-        Map<String, dynamic> moodRGBMap = data['Moods'];
+  // loadDayColorMap() async {
+  //   var dayColorMap = await getDayColorMap(userID, DEFAULT_COLOR);
+  //   setState(() {
+  //     _dayColors = dayColorMap;
+  //   });
+  // }
 
-        Map<String, Color> moodColorMap = {};
-        moodRGBMap.forEach((key, value) {
-          moodColorMap[key] = Color.fromRGBO(value[0], value[1], value[2], 128);
-        });
+  getColorForDay(DateTime day, DateTime focusedDay) {
+    var dayColors = provider.getDayColorMap();
+    DateTime key = dayColors.keys.firstWhere(
+        (x) => x.day == day.day && x.month == day.month && x.year == day.year,
+        orElse: () => DateTime(0));
 
-        setState(() {
-          _moodColors = moodColorMap;
-        });
-      }
-    });
-  }
+    Color color = DEFAULT_COLOR;
 
-  getDayMoodMap() {
-    Map<DateTime, String> dayMoodMap = <DateTime, String>{};
-    Stream<QuerySnapshot> journals = firestore
-        .collection('Users')
-        .doc(userID)
-        .collection('Journals')
-        .snapshots();
+    color = dayColors[key] ?? DEFAULT_COLOR;
 
-    journals.forEach((page) {
-      var pageMap = page.docs.asMap();
-      var date = DateTime.parse(['Date'].toString());
-      dayMoodMap[date] = pageMap['Mood'].toString();
-    });
-
-    return dayMoodMap;
-  }
-
-  getColorForDay(
-      DateTime day, DateTime focusedDay, Map<String, Color> moodColors) {
-    var mood = day.day % 2 == 0 ? "Happy" : "Sad";
     var alpha = day.month == focusedDay.month ? 148 : 48;
-    Color? color = moodColors[mood];
-    return color?.withAlpha(alpha) ?? DEFAULT_COLOR;
+    return color.withAlpha(alpha);
   }
 }

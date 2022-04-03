@@ -40,12 +40,7 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Container(
-            width: double.infinity,
-            child:
-                _isLoggedIn ? const MyStatefulWidget() : const WelcomeScreen()),
-      ),
+      body: _isLoggedIn ? const MyStatefulWidget() : const WelcomeScreen(),
     );
   }
 }

@@ -14,7 +14,8 @@ class JournalPage extends StatelessWidget {
           title: const Text('Journal Page'),
           centerTitle: true,
           backgroundColor: const Color(0xff28587b),
-        ),     
+        ),
+      ),
     );
   }
 }
