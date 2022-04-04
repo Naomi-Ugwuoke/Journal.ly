@@ -37,17 +37,22 @@ class _RegisterState extends State<Register> {
 
   User? user;
 
+  late UserCredential userCredential;
+
+  String tempEmail = '';
+  String tempPass = '';
+
   Future<void> registerUser() async {
 
-    var email = emailController.text;
-    var pass = passwordController.text;
+    tempEmail = emailController.text;
+    tempPass = passwordController.text;
     var confirmPass = confirmPasswordController.text;  
 
-    if(email.isNotEmpty && pass.isNotEmpty && confirmPass.isNotEmpty && pass == confirmPass) {
+    if(tempEmail.isNotEmpty && tempPass.isNotEmpty && confirmPass.isNotEmpty && tempPass == confirmPass) {
       try {
-        UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: email,
-          password: pass
+        userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: tempEmail,
+          password: tempPass
         );
 
         user = FirebaseAuth.instance.currentUser;
@@ -79,16 +84,70 @@ class _RegisterState extends State<Register> {
     var name = fullNameController.text;    
 
     if(name.isNotEmpty) {
-      user?.updateDisplayName(name);      
-      // user.reload();        
+      await user?.updateDisplayName(name);      
+      // user.reload();       
+      //
+      try {
+        UserCredential tempLoginUser = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: tempEmail,
+          password: tempPass
+        );
 
-      await createDoc(user);
+        User? tempUser = FirebaseAuth.instance.currentUser;
 
+        String? firstName = tempUser?.displayName!.split(" ")[0];
+        String? lastName = tempUser?.displayName!.split(" ")[1];
+        String? uid = tempUser?.uid;
+        // var moods = {};        
+
+        await users.doc(uid).set({
+          "firstName": firstName,
+          "lastName": lastName,
+          "uid": uid,
+          "moods": {
+            "happy": {
+              "r": "58",
+              "g": "87",
+              "b": "7f"
+            }
+          }
+        })
+        .then((value) { 
+          print("Collection updated.");  
+          FirebaseAuth.instance.signOut();
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginPage(),));        
+        })
+        .catchError((error) {
+          setState(() {
+            errorOccured = true;  
+            regError = error;
+            print(regError);
+          });      
+        });
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'user-not-found') {
+          setState(() {
+            errorOccured = true;
+            regError= 'User Not Found!';  
+          });
+          
+        } else if (e.code == 'wrong-password') {
+
+          setState(() {
+            errorOccured = true;
+            regError= 'Wrong Email/Password combination.';  
+          });
+          
+        }
+      }
+      
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginPage(),));        
     }
   }
 
-  Future<void> createDoc(User? user) async {
+  Future<void> createDoc() async {
+
+
 
     String? firstName = user?.displayName!.split(" ")[0];
     String? lastName = user?.displayName!.split(" ")[1];
