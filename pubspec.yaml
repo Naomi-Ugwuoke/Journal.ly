@@ -1,5 +1,5 @@
 name: the_bug_chasers
-description: A new Flutter project.
+description: A new way to Journal.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -67,7 +67,7 @@ flutter:
   assets:    
     - assets/imgs/home-illustration.png    
     - assets/imgs/home-logo.png    
-    - assets/imgs/user-image.png   
+    - assets/imgs/user-image.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

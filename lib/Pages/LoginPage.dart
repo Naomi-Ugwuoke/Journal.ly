@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:the_bug_chasers/Pages/MainPage.dart';
+
 import 'package:the_bug_chasers/Pages/RegisterPage.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:the_bug_chasers/User/Profile.dart';
 import 'package:the_bug_chasers/main.dart';
+
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+
 class LoginPage extends StatefulWidget {
   const LoginPage({ Key? key }) : super(key: key);
 
@@ -21,6 +25,36 @@ class _LoginPageState extends State<LoginPage> {
   final passwordController = TextEditingController();
   bool errorOccured = false;
   var loginError = '';
+
+  // CollectionReference users = FirebaseFirestore.instance.collection('Users');
+
+  // Future<void> createDoc(User user) async {
+
+  //   String firstName = user.displayName!.split(" ")[0];
+  //   String lastName = user.displayName!.split(" ")[1];
+  //   String uid = user.uid;
+  //   // var moods = {};
+
+  //   await users.add({
+  //     "firstName": firstName,
+  //     "lastName": lastName,
+  //     "uid": uid,
+  //     "moods": {
+  //       "happy": {
+  //         "r": "58",
+  //         "g": "87",
+  //         "b": "7f"
+  //       }
+  //     }
+  //   })
+  //   .then((value) { print("Collection updated.");  })
+  //   .catchError((error) {
+  //     setState(() {
+  //       errorOccured = true;  
+  //       loginError = error;
+  //     });      
+  //   });      
+  // }
 
   Future<void> login() async {
 
@@ -48,7 +82,9 @@ class _LoginPageState extends State<LoginPage> {
           profile.name = user.displayName;
           profile.isVerified = user.emailVerified;
           profile.userEmail = user.email;
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const MyApp(),));
+
+          // await createDoc(user);
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MyApp(),));
         }
 
       } on FirebaseAuthException catch (e) {

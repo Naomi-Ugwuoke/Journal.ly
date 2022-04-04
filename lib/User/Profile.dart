@@ -34,6 +34,7 @@ class Profile extends ChangeNotifier {
 
   set userId(String userId) {
     _uid = userId;
+    notifyListeners();
   }
 
   String? get userEmail {
@@ -42,6 +43,7 @@ class Profile extends ChangeNotifier {
 
   set userEmail(String? email) {
     _email = email;
+    notifyListeners();
   }
 
   String? get userName {
@@ -50,10 +52,12 @@ class Profile extends ChangeNotifier {
 
   set userName(String? userNameInput) {
     name = userNameInput;
+    notifyListeners();
   }
 
-  logout() {
+  logout() {    
     _isAuthenticated = false;
+    notifyListeners();
   }
 
 }

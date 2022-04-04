@@ -17,27 +17,20 @@ class _JournalSettingsState extends State<JournalSettings> {
         backgroundColor: const Color(0xff006e90),
       ),
      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
+        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 20.0),
         child: Expanded(
-                  child: ListView(
-        
-                  children: <Widget>[
-                      ListTile(
-                        title: const Text('Colour Options'),
-                        onTap: () {
-                              
-                        },
-                      ),
-                      ListTile(
-                        title: const Text('Diary Name'),
-                        onTap: () {
-                        },
-                      ),
-                      const Divider(color: Color(0xffcecece)),
-                      
-                    ] 
-                  ),
-                )
+          child: ListView(
+            children: <Widget>[              
+              ListTile(
+                title: const Text('Diary Name'),
+                enabled: false,
+                onTap: () {
+                },
+              ),
+              const Divider(color: Color(0xffbfbfbf), thickness: 0.5),
+            ] 
+          ),
+        )
       ),
     );
   }

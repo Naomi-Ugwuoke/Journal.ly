@@ -4,6 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:provider/provider.dart';
 // import 'package:the_bug_chasers/User/Profile.dart';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:the_bug_chasers/User/UsersCollection.dart';
+
+
+
 class Register extends StatefulWidget {
   const Register({ Key? key }) : super(key: key);
 
@@ -19,7 +25,10 @@ class _RegisterState extends State<Register> {
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
   final fullNameController = TextEditingController();
-  // final phoneController = TextEditingController();
+
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  CollectionReference users = FirebaseFirestore.instance.collection('Users');
 
   bool errorOccured = false;
   var regError = '';
@@ -43,15 +52,10 @@ class _RegisterState extends State<Register> {
 
         user = FirebaseAuth.instance.currentUser;
 
-        if(user !=null) {          
-          // final Profile profile = Provider.of<Profile>(context, listen: false);
-          // profile.isAuthenticated = true;
-          // Navigator.pushReplacement(context, 
-          //   MaterialPageRoute(builder: (context) => const LoginPage())
-          // );
+        if(user !=null) {   
           setState(() {
             newUser = false;
-          });
+          });                   
         }
         
       } on FirebaseAuthException catch (e) {
@@ -72,17 +76,46 @@ class _RegisterState extends State<Register> {
   }
 
   Future<void> updateDetails() async {
-    var name = fullNameController.text;
-    // PhoneAuthCredential phone = phoneController.value as PhoneAuthCredential;
+    var name = fullNameController.text;    
 
     if(name.isNotEmpty) {
-      await user?.updateDisplayName(name);
-      // await user?.updatePhoneNumber(phone);
-      await user?.reload();
+      user?.updateDisplayName(name);      
+      // user.reload();        
 
-      Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginPage(),));
+      await createDoc(user);
+
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginPage(),));        
     }
   }
+
+  Future<void> createDoc(User? user) async {
+
+    String? firstName = user?.displayName!.split(" ")[0];
+    String? lastName = user?.displayName!.split(" ")[1];
+    String? uid = user?.uid;
+    // var moods = {};
+
+    await users.add({
+      "firstName": firstName,
+      "lastName": lastName,
+      "uid": uid,
+      "moods": {
+        "happy": {
+          "r": "58",
+          "g": "87",
+          "b": "7f"
+        }
+      }
+    })
+    .then((value) { print("Collection updated.");  })
+    .catchError((error) {
+      setState(() {
+        errorOccured = true;  
+        regError = error;
+      });      
+    });      
+  }
+
 
   Widget stepOne() {
     return Column(                        

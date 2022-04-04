@@ -17,46 +17,53 @@ class _AccountSettingsState extends State<AccountSettings> {
         backgroundColor: const Color(0xff456990) 
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
+        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 20.0),
         child: Expanded(
-                  child: ListView(
-        
-                  children: <Widget>[
-                      ListTile(
-                        title: const Text('Name'),
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const AccountSettings()));      
-                        },
-                      ),
-                      ListTile(
-                        title: const Text('Number'),
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const AccountSettings()));      
-                        },
-                      ),
-                      ListTile(
-                        title: const Text('Email'),
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const AccountSettings()));      
-                        },
-                      ),
-                      ListTile(
-                        title: const Text('Name'),
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const AccountSettings()));      
-                        },
-                      ),
-                      ListTile(
-                        title: const Text('Notification'),
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const AccountSettings()));      
-                        },
-                      ),
-                      const Divider(color: Color(0xffcecece)),
-                      
-                    ] 
-                  ),
-                )
+          child: ListView(        
+            children: <Widget>[
+              ListTile(
+                title: const Text('Update Name'),
+                enabled: false,
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AccountSettings()));      
+                },
+              ),
+              const Divider(color: Color(0xffbfbfbf), thickness: 0.5),
+              ListTile(
+                title: const Text('Update Phone Number'),
+                enabled: false,
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AccountSettings()));      
+                },
+              ),
+              const Divider(color: Color(0xffbfbfbf), thickness: 0.5),
+              ListTile(
+                title: const Text('Update Email Address'),
+                enabled: false,
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AccountSettings()));      
+                },
+              ),
+              const Divider(color: Color(0xffbfbfbf), thickness: 0.5),
+              ListTile(
+                title: const Text('Update Password'),
+                enabled: false,
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AccountSettings()));      
+                },
+              ),
+              const Divider(color: Color(0xffbfbfbf), thickness: 0.5),
+              ListTile(
+                title: const Text('Update Notification settings'),
+                enabled: false,
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AccountSettings()));      
+                },
+              ),
+              const Divider(color: Color(0xffbfbfbf), thickness: 0.5),
+            ] 
+          ),
+        )
       ),
     );
   }

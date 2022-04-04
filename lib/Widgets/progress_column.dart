@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:the_bug_chasers/Pages/CalendarPage.dart';
 import 'package:the_bug_chasers/Widgets/progress_column_day_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:the_bug_chasers/User/AppState.dart';
+import 'package:the_bug_chasers/User/Profile.dart';
+
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProgressColumn extends StatefulWidget {
   const ProgressColumn({ Key? key }) : super(key: key);
@@ -14,6 +17,10 @@ class ProgressColumn extends StatefulWidget {
 class _ProgressColumnState extends State<ProgressColumn> {
   @override
   Widget build(BuildContext context) {
+
+    final Profile profile = Provider.of<Profile>(context, listen: false);
+    
+
     return Container(      
       height: 190,
       decoration: BoxDecoration(
