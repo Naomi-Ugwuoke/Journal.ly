@@ -10,6 +10,8 @@ class Profile extends ChangeNotifier {
   String? name = '';
   String? _email = '';
 
+  bool _moodAdded = false;
+
   bool get isAuthenticated {
     return _isAuthenticated;
   }
@@ -57,6 +59,15 @@ class Profile extends ChangeNotifier {
 
   logout() {    
     _isAuthenticated = false;
+    notifyListeners();
+  }
+
+  bool get moodAdded {
+    return _moodAdded;
+  }
+
+  set moodAdded(bool val) {
+    _moodAdded = val;
     notifyListeners();
   }
 

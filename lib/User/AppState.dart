@@ -7,6 +7,8 @@ class AppState extends ChangeNotifier {
 
   late DateTime? _selectedDay = DateTime.now();
 
+  bool _moodAdded = false;
+
   int get visiblePageIndex {
     return _visiblePageIndex;
   }
@@ -27,6 +29,15 @@ class AppState extends ChangeNotifier {
 
   void setIndex(int index) {
     _visiblePageIndex = index;
+    notifyListeners();
+  }
+
+  bool get moodAdded {
+    return _moodAdded;
+  }
+
+  set moodAdded(bool val) {
+    _moodAdded = val;
     notifyListeners();
   }
 
