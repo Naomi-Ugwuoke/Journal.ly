@@ -104,7 +104,7 @@ class _RegisterState extends State<Register> {
           "firstName": firstName,
           "lastName": lastName,
           "uid": uid,
-          "moods": {}
+          "Moods": {}
         })
         .then((value) { 
           print("Collection updated.");  
