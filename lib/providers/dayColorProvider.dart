@@ -53,7 +53,7 @@ class DayColorProvider {
       Map<String, dynamic> moodRGBMap = data['Moods'];
 
       moodRGBMap.forEach((key, value) {
-        newMap[key] = Color.fromRGBO(value[0], value[1], value[2], 128);
+        newMap[key] = Color.fromRGBO(int.parse(value[0]), int.parse(value[1]), int.parse(value[2]), 128);
       });
       _moodColorMap = newMap;
     });
