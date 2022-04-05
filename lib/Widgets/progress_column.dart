@@ -6,9 +6,12 @@ import 'package:the_bug_chasers/User/Profile.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:the_bug_chasers/providers/dayColorProvider.dart';
+
+import '../Pages/CalendarPage.dart';
 
 class ProgressColumn extends StatefulWidget {
-  const ProgressColumn({ Key? key }) : super(key: key);
+  const ProgressColumn({Key? key}) : super(key: key);
 
   @override
   State<ProgressColumn> createState() => _ProgressColumnState();
@@ -30,7 +33,7 @@ class _ProgressColumnState extends State<ProgressColumn> {
         boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 4.0, offset: Offset(2, 3))]
       ),
       child: Column(
-        children: [           
+        children: [
           Padding(
             padding: const EdgeInsets.all(5.0),
             child: Column(
@@ -50,8 +53,10 @@ class _ProgressColumnState extends State<ProgressColumn> {
                 ),
               ],
             ),
-          ),    
-          const SizedBox(height: 5,),
+          ),
+          const SizedBox(
+            height: 5,
+          ),
           Container(
             width: double.infinity,
             height: 36,
@@ -60,14 +65,23 @@ class _ProgressColumnState extends State<ProgressColumn> {
               color: Color(0xfff0Edee),
               borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10))
             ),
-            child: InkWell(
-              child: const Text('View All ', style: TextStyle(fontWeight: FontWeight.bold),) ,
+          child: InkWell(
+              child: const Text(
+                'View All ',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
               onTap: () {
-                final AppState appState = Provider.of<AppState>(context, listen: false);
-                appState.visiblePageIndex = 2;
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CalendarPage(
+                        provider: DayColorProvider(
+                            uid: profile.userId),
+                      ),
+                    ));
               },
-            )
-          )
+            ),
+          ),
         ],
       ),
     );

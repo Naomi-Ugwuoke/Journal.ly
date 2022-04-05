@@ -9,8 +9,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:the_bug_chasers/User/Profile.dart';
 import 'package:the_bug_chasers/User/AppState.dart';
 
-
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -73,4 +71,3 @@ class WelcomePage extends StatelessWidget {
     );
   }
 }
-
