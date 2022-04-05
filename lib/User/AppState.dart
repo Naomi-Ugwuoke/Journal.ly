@@ -5,8 +5,19 @@ class AppState extends ChangeNotifier {
 
   int _visiblePageIndex = 0;
 
+  late DateTime? _selectedDay = DateTime.now();
+
   int get visiblePageIndex {
     return _visiblePageIndex;
+  }
+
+  DateTime? get selectedDay {
+    return _selectedDay;
+  }
+
+  set selectedDay(DateTime? dateTime) {
+    _selectedDay = dateTime;
+    notifyListeners();
   }
 
   set visiblePageIndex(int index) {

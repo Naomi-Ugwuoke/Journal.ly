@@ -51,7 +51,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
     final List<Widget> _widgetOptions = <Widget>[
       const HomePage(),
-      const JournalPage(null),
+      const JournalPage(),
       CalendarPage(provider: _dayColorProvider),
       const SettingsPage(),
     ];    

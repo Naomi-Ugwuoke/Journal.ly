@@ -28,7 +28,7 @@ class HomePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   // if(!profile.isVerified) const EmailNotVerified(),
-                  Text('Welcome, \n' + profile.userName!, style: const TextStyle(fontSize: 36, fontWeight: FontWeight.bold), textAlign: TextAlign.left,),
+                  Text('Welcome, \n' + profile.userName!.split(" ")[0], style: const TextStyle(fontSize: 36, fontWeight: FontWeight.bold), textAlign: TextAlign.left,),
                   const SizedBox(height: 30,),
                   const ProgressColumn(),
                   const SizedBox(height: 20,),
