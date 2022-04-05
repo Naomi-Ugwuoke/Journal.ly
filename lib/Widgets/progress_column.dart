@@ -25,8 +25,8 @@ class _ProgressColumnState extends State<ProgressColumn> {
       height: 190,
       decoration: BoxDecoration(
         color: const Color(0xffffffff),
-        border: Border.all(width: 1, color: const Color(0xffeeeeee)),
         borderRadius: const BorderRadius.all(Radius.circular(10)),
+        border: Border.all(width: 1, color: const Color(0xffeeeeee)),        
         boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 4.0, offset: Offset(2, 3))]
       ),
       child: Column(
@@ -37,7 +37,7 @@ class _ProgressColumnState extends State<ProgressColumn> {
               children: [
                 const Padding(
                   padding: EdgeInsets.all(2.0),
-                  child: Text('Progress', style: TextStyle(fontSize: 18), textAlign: TextAlign.left,),
+                  child: Text('Progress', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold), textAlign: TextAlign.left,),
                 ),
                 Row(
                   // crossAxisAlignment: CrossAxisAlignment.center,
