@@ -47,8 +47,8 @@ class _ProgressColumnState extends State<ProgressColumn> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [              
                     ProgressColumnDayWidget(dayColor: const Color(0xffcccccc), date: DateTime.now(),),              
-                    ProgressColumnDayWidget(dayColor: const Color(0xff788aa3), date: DateTime.now(),),              
-                    ProgressColumnDayWidget(dayColor: const Color(0xff7d84b2), date: DateTime.now(),),              
+                    ProgressColumnDayWidget(dayColor: const Color(0xff788aa3), date: DateTime.now().subtract(const Duration(days: 1)),),              
+                    ProgressColumnDayWidget(dayColor: const Color(0xff7d84b2), date: DateTime.now().subtract(const Duration(days: 2)),),              
                   ]
                 ),
               ],
