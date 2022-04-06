@@ -11,12 +11,12 @@ class CustomAppBar extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Text(
-            "What are you thinking?",
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        children: const [
+          Text(
+            "Journal Entries",
+            style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
           ),
-          Container(
+          /*Container(
             decoration: BoxDecoration(
                 color: Colors.blueGrey[900],
                 borderRadius: BorderRadius.circular(8.0)),
@@ -26,7 +26,7 @@ class CustomAppBar extends StatelessWidget {
             ),
             height: 45,
             width: 45,
-          )
+          )*/
         ],
       ),
     );

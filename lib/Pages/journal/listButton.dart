@@ -7,9 +7,9 @@ class ListButtonContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
-      child: Row(
+    return const Padding(
+      padding: EdgeInsets.symmetric(vertical: 10.0),
+      /*child: Row(
         children: [
           ListButton(
             isActive: true,
@@ -21,7 +21,7 @@ class ListButtonContainer extends StatelessWidget {
             title: 'Notes',
           ),
         ],
-      ),
+      ),*/
     );
   }
 }
