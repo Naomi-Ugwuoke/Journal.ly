@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:the_bug_chasers/User/AppState.dart';
+import 'package:the_bug_chasers/providers/dayColorProvider.dart';
+import 'package:the_bug_chasers/User/Profile.dart';
 
 
 class DailyJournalProgressCard extends StatelessWidget {
-  const DailyJournalProgressCard({ Key? key, required this.themeColor }) : super(key: key);
 
-  final bool journalEntryMade = true;
+  DailyJournalProgressCard({ Key? key, required this.themeColor, required this.profile}) : super(key: key);  
+
+  bool journalEntryMade = false;
   final Color themeColor;
+  final Profile profile;
 
   final TextStyle textColor = const TextStyle(color: Colors.white);
 
-  Widget entryNotMade(BuildContext context) {
+  Widget entryNotMade(BuildContext context) {    
+
     return Card(
       child: Column(
         children: <Widget> [
@@ -70,6 +75,19 @@ class DailyJournalProgressCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    DayColorProvider provider = DayColorProvider(uid: profile.userId);
+
+    var dayColors = provider.getDayColorMap();
+
+    DateTime date = DateTime.now();
+
+    dayColors.forEach((x, v) {       
+      if(x.day == date.day && x.month == date.month && x.year == date.year) {
+        journalEntryMade = true;
+      }
+    });
+
     return journalEntryMade ? entryMade(context) : entryNotMade(context);
   }
 }

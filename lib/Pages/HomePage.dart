@@ -32,7 +32,7 @@ class HomePage extends StatelessWidget {
                   const SizedBox(height: 30,),
                   const ProgressColumn(),
                   const SizedBox(height: 20,),
-                  DailyJournalProgressCard(themeColor: _themeColor),
+                  DailyJournalProgressCard(themeColor: _themeColor, profile: profile,),
                   const SizedBox(height: 20,),
                   UsersMoods(profile:profile)
                 ],

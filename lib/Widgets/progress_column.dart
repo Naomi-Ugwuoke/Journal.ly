@@ -17,12 +17,44 @@ class ProgressColumn extends StatefulWidget {
   State<ProgressColumn> createState() => _ProgressColumnState();
 }
 
-class _ProgressColumnState extends State<ProgressColumn> {
+class _ProgressColumnState extends State<ProgressColumn> { 
+
   @override
   Widget build(BuildContext context) {
 
     final Profile profile = Provider.of<Profile>(context, listen: false);
-    
+    final DayColorProvider provider = DayColorProvider(uid: profile.userId);
+
+    const Color _themeColor =const Color(0xff3b3b58);   
+
+    DateTime today = DateTime.now();
+    DateTime yesterday = DateTime.now().subtract(const Duration(days: 1));
+    DateTime dayBefore = DateTime.now().subtract(const Duration(days: 2));
+
+    // Map<DateTime, Object> daysWithMoods = <DateTime, Object>{};
+
+    getMoodandProgress(DateTime date) {
+
+      // Map<DateTime, Object> newMap = <DateTime, Object>{};
+      var dayColors = provider.getDayColorMap();
+      DateTime key = dayColors.keys.firstWhere(
+        (x) => x.day == date.day && x.month == date.month && x.year == date.year,
+        orElse: () => date);
+
+      Color color = _themeColor;
+
+      color = dayColors[key] ?? _themeColor;
+
+      // newMap[key] =  {
+      //   "color": color,
+      //   "journalAdded": color == _themeColor ? false : true
+      // };
+
+      // print([key, color, color == _themeColor ? false : true]);
+
+      // daysWithMoods.addAll(newMap);
+      return [key, color, color == _themeColor ? false : true];
+    }
 
     return Container(      
       height: 190,
@@ -46,9 +78,11 @@ class _ProgressColumnState extends State<ProgressColumn> {
                   // crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [              
-                    ProgressColumnDayWidget(dayColor: const Color(0xffcccccc), date: DateTime.now(),),              
-                    ProgressColumnDayWidget(dayColor: const Color(0xff788aa3), date: DateTime.now().subtract(const Duration(days: 1)),),              
-                    ProgressColumnDayWidget(dayColor: const Color(0xff7d84b2), date: DateTime.now().subtract(const Duration(days: 2)),),              
+                    ProgressColumnDayWidget(dayColor: getMoodandProgress(today)[1] as Color, date: getMoodandProgress(today)[0] as DateTime, journalAdded: getMoodandProgress(today)[2] as bool,),              
+                    ProgressColumnDayWidget(dayColor: getMoodandProgress(yesterday)[1] as Color, date: getMoodandProgress(yesterday)[0] as DateTime, journalAdded: getMoodandProgress(yesterday)[2] as bool,),              
+                    ProgressColumnDayWidget(dayColor: getMoodandProgress(dayBefore)[1] as Color, date: getMoodandProgress(dayBefore)[0] as DateTime, journalAdded: getMoodandProgress(dayBefore)[2] as bool,),              
+                    // ProgressColumnDayWidget(dayColor: _themeColor, date: DateTime.now().subtract(const Duration(days: 1)), journalAdded: false,),              
+                    // ProgressColumnDayWidget(dayColor: _themeColor, date: DateTime.now().subtract(const Duration(days: 2)), journalAdded: true,),              
                   ]
                 ),
               ],
