@@ -29,13 +29,10 @@ class _ProgressColumnState extends State<ProgressColumn> {
 
     DateTime today = DateTime.now();
     DateTime yesterday = DateTime.now().subtract(const Duration(days: 1));
-    DateTime dayBefore = DateTime.now().subtract(const Duration(days: 2));
-
-    // Map<DateTime, Object> daysWithMoods = <DateTime, Object>{};
+    DateTime dayBefore = DateTime.now().subtract(const Duration(days: 2));    
 
     getMoodandProgress(DateTime date) {
 
-      // Map<DateTime, Object> newMap = <DateTime, Object>{};
       var dayColors = provider.getDayColorMap();
       DateTime key = dayColors.keys.firstWhere(
         (x) => x.day == date.day && x.month == date.month && x.year == date.year,
@@ -44,15 +41,7 @@ class _ProgressColumnState extends State<ProgressColumn> {
       Color color = _themeColor;
 
       color = dayColors[key] ?? _themeColor;
-
-      // newMap[key] =  {
-      //   "color": color,
-      //   "journalAdded": color == _themeColor ? false : true
-      // };
-
-      // print([key, color, color == _themeColor ? false : true]);
-
-      // daysWithMoods.addAll(newMap);
+      
       return [key, color, color == _themeColor ? false : true];
     }
 

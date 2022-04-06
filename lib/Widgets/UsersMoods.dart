@@ -41,56 +41,6 @@ class _UsersMoodsState extends State<UsersMoods> {
 
   
   Widget moodContainer() {
-
-    // getMoods();
-    // CollectionReference users = FirebaseFirestore.instance.collection('Users');
-    
-
-    // if(data.isNotEmpty) {
-    //   Map<String, dynamic> moods = data['Moods'];
-
-    //   List moodList = [];
-
-    //   if(moods.isNotEmpty) {
-    //       moods.forEach((key, value) => 
-    //       moodList.add({
-    //         "name": key,
-    //         "color": '0xff' + value[0] + value[1] + value[2]
-    //       })
-    //     );          
-        
-    //     return Padding(
-    //       padding: const EdgeInsets.all(3),
-    //       child: GridView.builder(
-    //         shrinkWrap: true,
-    //         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-    //           maxCrossAxisExtent: 175,
-    //           childAspectRatio: 3 / 2,
-    //           crossAxisSpacing: 20,
-    //           mainAxisSpacing: 20), 
-    //         itemCount: moods.length,  
-    //         itemBuilder: (BuildContext context, index) {
-    //           return Container(
-    //             alignment: Alignment.center,
-    //             decoration:  BoxDecoration(
-    //               borderRadius: const BorderRadius.all(Radius.circular(5)),
-    //               color: Color(int.parse(moodList[index]['color']))
-    //             ),
-    //             child: Text(moodList[index]['name'].toString().toUpperCase(), style: const TextStyle(fontSize: 16, color: Colors.white),),                  
-    //           );
-    //         }
-    //       ),
-    //     );
-    //   }
-    //   else {
-    //     return const Text('No moods found :/');
-    //   }
-    // }
-    // else {
-    //   getMoods();
-    //   return const Text('Fetching your moods');
-    // }
-
     
 
     CollectionReference users = FirebaseFirestore.instance.collection('Users');
@@ -159,14 +109,6 @@ class _UsersMoodsState extends State<UsersMoods> {
 
   @override
   Widget build(BuildContext context) {  
-
-    // getMoods();
-    // if(profile.moodAdded == true) {
-    //   setState(() {
-    //     getMoods();
-    //     profile.moodAdded = false;
-    //   });
-    // }
 
     return Container(        
       height: 225,      

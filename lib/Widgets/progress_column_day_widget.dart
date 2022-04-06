@@ -9,10 +9,7 @@ class ProgressColumnDayWidget extends StatelessWidget {
 
   final bool journalAdded;
 
-
-
-  const ProgressColumnDayWidget({ Key? key, required this.dayColor, required this.date, required this.journalAdded }) : super(key: key);
-  
+  const ProgressColumnDayWidget({ Key? key, required this.dayColor, required this.date, required this.journalAdded }) : super(key: key);  
 
   @override
   Widget build(BuildContext context) {
