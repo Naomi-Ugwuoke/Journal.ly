@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:the_bug_chasers/Pages/AccountSettings.dart';
 import 'package:the_bug_chasers/Pages/JournalSettings.dart';
 import 'package:provider/provider.dart';
+import 'package:the_bug_chasers/Pages/MoodSettings.dart';
 import 'package:the_bug_chasers/User/Profile.dart';
 import 'package:the_bug_chasers/main.dart';
 
@@ -78,7 +79,7 @@ class SettingsPage extends StatelessWidget {
                       leading: const Icon(Icons.emoji_emotions_outlined),                      
                       title: const Text('Moods Settings'),
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const JournalSettings()));      
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const MoodSettingsPage()));      
                       },
                     ),
                     const Divider(color: Color(0xffbfbfbf), thickness: 0.5),

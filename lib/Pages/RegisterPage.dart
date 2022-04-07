@@ -103,7 +103,12 @@ class _RegisterState extends State<Register> {
         await users.doc(uid).set({
           "firstName": firstName,
           "lastName": lastName,          
-          "Moods": {}
+          "Moods": {
+            "Happy": ['47', '89', '78'],
+            "Bliss": ['E0', '8D', '79'],
+            "Angry": ['FB', '61', '07'],
+            "Peaceful": ['76','99', 'D4']
+          }
         })
         .then((value) { 
           // print("Collection updated.");  
