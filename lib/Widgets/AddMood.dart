@@ -8,28 +8,26 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
-
 class AddMood extends StatefulWidget {
-  const AddMood({ Key? key }) : super(key: key);
+  const AddMood({Key? key}) : super(key: key);
 
   @override
   State<AddMood> createState() => _AddMoodState();
 }
 
-class _AddMoodState extends State<AddMood> {  
-
-  final nameController = TextEditingController();  
+class _AddMoodState extends State<AddMood> {
+  final nameController = TextEditingController();
   final colorController = TextEditingController();
 
   Future<bool> addMood() async {
     String name = nameController.text;
     // Color color = chosenColor;
-    String rgb = colorController.text;  
+    String rgb = colorController.text;
 
-    if(rgb.startsWith("#")) {
+    if (rgb.startsWith("#")) {
       rgb = rgb.substring(1, 8);
     }
-    
+
     String r = rgb[2] + rgb[3];
     String g = rgb[4] + rgb[5];
     String b = rgb[6] + rgb[7];
@@ -38,23 +36,23 @@ class _AddMoodState extends State<AddMood> {
 
     CollectionReference users = FirebaseFirestore.instance.collection('Users');
 
-    if(name.isNotEmpty && rgb.toString().isNotEmpty) {
-      var newMood = {        
-        name: [r, g, b]        
-      };     
+    if (name.isNotEmpty && rgb.toString().isNotEmpty) {
+      var newMood = {
+        name: [r, g, b]
+      };
 
-    //  print(newMood);
+      //  print(newMood);
 
-      await users.doc(profile.userId).update({"Moods.$name": [r, g, b]})
-        .then((value) {   
-          profile.moodAdded = true;
-          return true;       
-          // return alertWidget("Mood added!", "The mood has been added to your account.");
-        })
-        .catchError((onError) {                    
-          return false;
-          // return alertWidget("Error!", onError.toString());
-        });      
+      await users.doc(profile.userId).update({
+        "Moods.$name": [r, g, b]
+      }).then((value) {
+        profile.moodAdded = true;
+        return true;
+        // return alertWidget("Mood added!", "The mood has been added to your account.");
+      }).catchError((onError) {
+        return false;
+        // return alertWidget("Error!", onError.toString());
+      });
     }
 
     return false;
@@ -71,15 +69,14 @@ class _AddMoodState extends State<AddMood> {
 
   Widget alertWidget(String alertTitle, String alertText) {
     return AlertDialog(
-      title:  Text(alertTitle),
+      title: Text(alertTitle),
       content: Text(alertText),
       actions: [
         TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          }, 
-          child: const Text('Close')
-        )
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Close'))
       ],
     );
   }
@@ -87,48 +84,47 @@ class _AddMoodState extends State<AddMood> {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () => showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: const Text('Add New Mood'),
-          content: SingleChildScrollView(
-            child: Column(
-              children: [
-                TextFormField(
-                  controller: nameController,
-                  autofocus: true,
-                  enableSuggestions: true,                
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Mood Name',
-                    hintText: 'Enter name for your mood'
+        onPressed: () => showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+                  title: const Text('Add New Mood'),
+                  content: SingleChildScrollView(
+                    child: Column(children: [
+                      TextFormField(
+                        controller: nameController,
+                        autofocus: true,
+                        enableSuggestions: true,
+                        decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Mood Name',
+                            hintText: 'Enter name for your mood'),
+                      ),
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      ColorPicker(
+                        pickerColor: pickerColor,
+                        onColorChanged: changeColor,
+                        hexInputBar: true,
+                        paletteType: PaletteType.hueWheel,
+                        hexInputController: colorController,
+                      )
+                    ]),
                   ),
-                ),
-                const SizedBox(height: 25,),
-                ColorPicker(
-                  pickerColor: pickerColor, 
-                  onColorChanged: changeColor,
-                  hexInputBar: true,
-                  paletteType: PaletteType.hueWheel,                  
-                  hexInputController: colorController,                  
-                )                
-              ]             
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(onPressed: () {
-              Navigator.of(context).pop();
-              }, 
-              child: const Text('Cancel')
-            ),
-            ElevatedButton(onPressed: () async {
-              await addMood();
-              Navigator.of(context).pop();
-            }, child: const Text('Add Mood'))
-          ],
-        )
-      ), 
-      child: const Text('Add New')
-    );
+                  actions: <Widget>[
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Cancel')),
+                    ElevatedButton(
+                        onPressed: () async {
+                          await addMood();
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Add Mood'))
+                  ],
+                )),
+        child: const Text('Add New'));
   }
 }

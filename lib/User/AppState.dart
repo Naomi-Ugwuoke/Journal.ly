@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:the_bug_chasers/providers/dayColorProvider.dart';
+import 'package:the_bug_chasers/providers/DayColorProvider.dart';
 
 class AppState extends ChangeNotifier {
-
   int _visiblePageIndex = 0;
 
   late DateTime? _selectedDay = DateTime.now();
@@ -51,5 +50,4 @@ class AppState extends ChangeNotifier {
     _moodAdded = val;
     notifyListeners();
   }
-
 }
