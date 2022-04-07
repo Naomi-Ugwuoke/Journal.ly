@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:the_bug_chasers/providers/DayColorProvider.dart';
 
 class AppState extends ChangeNotifier {
   int _visiblePageIndex = 0;
 
-  late DateTime? _selectedDay = DateTime.now();
+  late DateTime _selectedDay = DateTime.now();
+  late DateTime _focusedDay = DateTime.now();
 
   bool _moodAdded = false;
 
@@ -23,12 +23,21 @@ class AppState extends ChangeNotifier {
     return _visiblePageIndex;
   }
 
-  DateTime? get selectedDay {
+  DateTime get selectedDay {
     return _selectedDay;
   }
 
-  set selectedDay(DateTime? dateTime) {
+  DateTime get focusedDay {
+    return _focusedDay;
+  }
+
+  set selectedDay(DateTime dateTime) {
     _selectedDay = dateTime;
+    notifyListeners();
+  }
+
+  set focusedDay(DateTime dateTime) {
+    _focusedDay = dateTime;
     notifyListeners();
   }
 

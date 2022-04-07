@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:the_bug_chasers/Utils/CalendarUtils.dart';
 
 class DayColorProvider {
   static DayColorProvider? _dayColorProvider;
@@ -21,6 +22,10 @@ class DayColorProvider {
   startListening() {
     listenForDayMoodMap();
     listenForMoodColorMap();
+  }
+
+  getUserMoods() {
+    return _moodColorMap.keys.toList();
   }
 
   listenForDayMoodMap() {
@@ -66,5 +71,10 @@ class DayColorProvider {
       dayColorMap[key] = _moodColorMap[value] ?? defaultColor;
     });
     return dayColorMap;
+  }
+
+  String? getMoodForDay(DateTime day) {
+    day = removeTimeFromDate(day);
+    return _dayMoodMap[day];
   }
 }
