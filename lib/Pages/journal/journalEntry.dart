@@ -1,62 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:the_bug_chasers/User/AppState.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter/src/material/colors.dart';
 
-import 'journal/AppBar.dart';
-import 'journal/ListData.dart';
-import 'journal/listButton.dart';
-import 'journal/customBar.dart';
-import 'journal/model/listModel.dart';
-import 'journal/search.dart';
-
-class JournalPage extends StatefulWidget {
-  // final DateTime? focusedDay;
-  const JournalPage( {Key? key}) : super(key: key);
-
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<JournalPage> {
+class JournalPage extends StatelessWidget {
+  const JournalPage(DateTime focusedDay, {Key? key, required this.title})
+      : super(key: key);
+  final String title;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        bottomNavigationBar: const CustomBottomBar(),
-        body: SafeArea(
-            child: ListView(
-          children: const [
-            //navigation bar
-            CustomAppBar(),
-            SearchBar(),
-            ListButtonContainer(),
-
-            //creating notes
-
-            ListData(),
-          ],
-        )));
+      appBar: AppBar(
+        title: Text(title),
+      ),
+      body: Center(
+        child: TextButton(
+          onPressed: () {},
+          child: const Text('Go Back'),
+        ),
+      ),
+    );
   }
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 /*import 'package:flutter/material.dart';
 
+import '../main.dart';
+
 class JournalPage extends StatelessWidget {
-  const JournalPage(param0);
+  JournalPage(param0);
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +47,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String input = "";
-  //List entry = List();
+  // List entry = List();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -121,8 +91,8 @@ class _HomeState extends State<Home> {
   }
 }
 
-
 */
+
 
 
 
@@ -130,24 +100,21 @@ class _HomeState extends State<Home> {
 /*import 'package:flutter/material.dart';
 
 class JournalPage extends StatelessWidget {
-  // final DateTime? selectedDay;
-  // const JournalPage(this.selectedDay, {Key? key}) : super(key: key);
-
-  const JournalPage( {Key? key}) : super(key: key);
+  final DateTime? selectedDay;
+  const JournalPage(this.selectedDay, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    DateTime dateToOpen = selectedDay ?? DateTime.now();
 
-    final AppState appState = Provider.of<AppState>(context, listen: false);
-
-    DateTime dateToOpen = appState.selectedDay ?? DateTime.now();    
-
-    return  Scaffold(
+    return MaterialApp(
+      home: Scaffold(
         appBar: AppBar(
           title: const Text('Journal Page'),
           centerTitle: true,
           backgroundColor: const Color(0xff28587b),
-        ),      
+        ),
+      ),
     );
   }
 }*/
