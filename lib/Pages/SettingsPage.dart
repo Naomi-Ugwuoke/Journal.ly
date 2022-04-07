@@ -21,13 +21,6 @@ class SettingsPage extends StatelessWidget {
     const Color _themeColor =  Color(0xff3b3b58);
 
     return Consumer<Profile>(builder: (context, Profile profile, child) {
-
-      void logout() {
-         profile.logout();
-        Navigator.push(context, MaterialPageRoute(builder: (context) => const MyApp()));
-      }
-
-
       return Scaffold(
         appBar: AppBar(
           title: const Text('Settings'),

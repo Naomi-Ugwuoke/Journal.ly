@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:the_bug_chasers/Widgets/PopUpForm.dart';
 
 class AccountSettings extends StatefulWidget {
   const AccountSettings({ Key? key }) : super(key: key);
@@ -22,43 +23,33 @@ class _AccountSettingsState extends State<AccountSettings> {
           child: ListView(        
             children: <Widget>[
               ListTile(
-                title: const Text('Update Name'),
-                enabled: false,
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AccountSettings()));      
-                },
+                title: const Text('Update Name'),        
+                enabled: false,        
+                onTap: () {},
               ),
               const Divider(color: Color(0xffbfbfbf), thickness: 0.5),
               ListTile(
                 title: const Text('Update Phone Number'),
                 enabled: false,
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AccountSettings()));      
-                },
+                onTap: () {},
               ),
               const Divider(color: Color(0xffbfbfbf), thickness: 0.5),
               ListTile(
                 title: const Text('Update Email Address'),
                 enabled: false,
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AccountSettings()));      
-                },
+                onTap: () {},
               ),
               const Divider(color: Color(0xffbfbfbf), thickness: 0.5),
               ListTile(
                 title: const Text('Update Password'),
                 enabled: false,
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AccountSettings()));      
-                },
+                onTap: () {},
               ),
               const Divider(color: Color(0xffbfbfbf), thickness: 0.5),
               ListTile(
                 title: const Text('Update Notification settings'),
                 enabled: false,
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const AccountSettings()));      
-                },
+                onTap: () {},
               ),
               const Divider(color: Color(0xffbfbfbf), thickness: 0.5),
             ] 
