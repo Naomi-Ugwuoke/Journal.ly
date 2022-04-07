@@ -1,151 +1,83 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/material/colors.dart';
-
-import 'journal/AppBar.dart';
-import 'journal/ListData.dart';
-import 'journal/listButton.dart';
-import 'journal/customBar.dart';
-import 'journal/model/listModel.dart';
-import 'journal/search.dart';
+import 'package:intl/intl.dart';
 
 class JournalPage extends StatefulWidget {
-  final DateTime? focusedDay;
-  const JournalPage(this.focusedDay, {Key? key}) : super(key: key);
+  final DateTime? date;
+
+  const JournalPage({Key? key, this.date}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  // ignore: no_logic_in_create_state
+  State<JournalPage> createState() => _JournalPage(date: date);
 }
 
-class _HomeScreenState extends State<JournalPage> {
+class _JournalPage extends State<JournalPage> {
+  DateTime journalDate = DateTime.now();
+
+  _JournalPage({DateTime? date}) {
+    if (date != null) {
+      journalDate = date;
+    }
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? newDate = await showDatePicker(
+        context: context,
+        initialDate: journalDate,
+        firstDate: DateTime(2000),
+        lastDate: DateTime.now());
+    if (newDate != null && newDate != journalDate) {
+      setState(() {
+        journalDate = DateTime(newDate.year, newDate.month, newDate.day);
+      });
+    }
+  }
+
+  Future<void> _handleTextSubmitted(String userTextInput) async {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        bottomNavigationBar: const CustomBottomBar(),
-        body: SafeArea(
-            child: ListView(
-          children: const [
-            //navigation bar
-            CustomAppBar(),
-            SearchBar(),
-            ListButtonContainer(),
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: MaterialApp(
+          home: Scaffold(
+            appBar: AppBar(
+              title: ElevatedButton(
+                onPressed: () => _selectDate(context),
+                child: Text(
+                  DateFormat("MMMM d, yyyy").format(journalDate),
+                  style: const TextStyle(
+                      fontSize: 30, fontWeight: FontWeight.bold),
+                ),
+              ),
+              centerTitle: false,
+              titleSpacing: 0.0,
+            ),
+            body: Container(
+              padding: const EdgeInsets.all(7.0),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                reverse: true,
 
-            //creating notes
-
-            ListData(),
-          ],
-        )));
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*import 'package:flutter/material.dart';
-
-class JournalPage extends StatelessWidget {
-  const JournalPage(param0);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Home(),
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          primaryColor: Color(0xff),
-          scaffoldBackgroundColor: Color(0xff2B2D2D)),
-    );
-  }
-}
-
-class Home extends StatefulWidget {
-  @override
-  _HomeState createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-  String input = "";
-  //List entry = List();
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          elevation: 0.0,
-          centerTitle: true,
-          title: Text(
-            "Journal Page",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 35,
-              fontStyle: FontStyle.italic,
-              letterSpacing: 5,
+                // here's the actual text box
+                child: TextField(
+                  keyboardType: TextInputType.multiline,
+                  minLines: 33,
+                  maxLines: null, //grow automatically
+                  onSubmitted: (strInput) => _handleTextSubmitted(strInput),
+                  decoration: const InputDecoration.collapsed(
+                    hintText: 'Create a journal entry..',
+                  ),
+                ),
+                // ends the actual text box
+              ),
             ),
           ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(
-            Icons.add,
-            color: Colors.red[500],
-            size: 35,
-          ),
-          onPressed: () {
-            showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: Text("Add an entry"),
-                    content: TextField(
-                      decoration:
-                          InputDecoration(hintText: "How was your day?"),
-                      onChanged: (String value) {},
-                    ),
-                  );
-                });
-          },
         ),
       ),
     );
   }
 }
-
-
-*/
-
-
-
-
-/*import 'package:flutter/material.dart';
-
-class JournalPage extends StatelessWidget {
-  // final DateTime? selectedDay;
-  // const JournalPage(this.selectedDay, {Key? key}) : super(key: key);
-
-  const JournalPage( {Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-
-    final AppState appState = Provider.of<AppState>(context, listen: false);
-
-    DateTime dateToOpen = appState.selectedDay ?? DateTime.now();    
-
-    return  Scaffold(
-        appBar: AppBar(
-          title: const Text('Journal Page'),
-          centerTitle: true,
-          backgroundColor: const Color(0xff28587b),
-        ),      
-    );
-  }
-}*/
