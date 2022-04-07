@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:the_bug_chasers/User/AppState.dart';
+import 'package:the_bug_chasers/Utils/CalendarUtils.dart';
 import 'package:the_bug_chasers/Utils/DatabaseUtils.dart';
 import 'package:the_bug_chasers/providers/DayColorProvider.dart';
 
@@ -18,6 +20,11 @@ class JournalPage extends StatefulWidget {
 
 class _JournalPage extends State<JournalPage> {
   _JournalPage();
+
+  bool errorOccured = false;
+  String error = '';
+
+  // String? journalText = '';
 
   Future<void> _openCalendar(BuildContext context) async {
     final AppState appState = Provider.of<AppState>(context, listen: false);
@@ -63,12 +70,52 @@ class _JournalPage extends State<JournalPage> {
     _dropDownItems = moodItems;
   }
 
-  getJournalText() {}
+  late final journalTextController = TextEditingController();
+  getJournalText() {
+
+    final AppState appState = Provider.of<AppState>(context, listen: false);
+    final Profile profile = Provider.of<Profile>(context, listen: false);
+
+    FirebaseFirestore.instance.collection('Users')
+      .doc(profile.userId)
+      .collection('Journals')
+      .where('Date', isEqualTo: Timestamp.fromDate(removeTimeFromDate(appState.selectedDay)))
+      .get()
+      .then((value) {
+          var docs = value.docs;
+          docs.forEach((element) {
+              var data = element.data();
+              // if(this.mounted) {
+              //     setState(() {
+              //   // journalText = data['Text'];  
+              //   // journalTextController.text = data['Text'];
+              //   });          
+              // }
+              journalTextController.text = data['Text'];
+          });
+        }
+      );    
+  }
+
 
   List<DropdownMenuItem<String>> _dropDownItems = [];
   String? dropdownValue;
 
   bool firstBuild = true;
+
+  // @override
+  // void initState() {
+  //   //loadDayColorMap();
+  //   super.initState();
+  // }
+
+
+  // @override
+  // void dispose() {
+  //   getJournalText().dispose();
+  //   super.dispose();    
+  // }
+
 
   @override
   Widget build(BuildContext context) {
@@ -76,10 +123,18 @@ class _JournalPage extends State<JournalPage> {
     final AppState appState = Provider.of<AppState>(context, listen: false);
     var provider = DayColorProvider(uid: profile.userId);
     _getDropDownItems();
+    getJournalText();
+
+    // if(mounted){
+    //   getJournalText();
+    // }
 
     if (firstBuild) {
       dropdownValue = provider.getMoodForDay(appState.selectedDay);
+      // getJournalText();
     }
+
+    
 
     return Consumer<AppState>(
       builder:
@@ -108,7 +163,13 @@ class _JournalPage extends State<JournalPage> {
                   titleSpacing: 0.0,
                   backgroundColor: const Color.fromARGB(255, 40, 88, 123),
                 ),
-                body: Container(
+                // floatingActionButton: FloatingActionButton(
+                //   onPressed: () {
+                //     getJournalText();
+                //   },
+                //   child: const Icon(Icons.refresh),
+                // ),
+                body: SingleChildScrollView(
                   padding: const EdgeInsets.all(7.0),
                   child: Column(
                     children: [
@@ -127,8 +188,9 @@ class _JournalPage extends State<JournalPage> {
                         scrollDirection: Axis.vertical,
                         reverse: true,
                         child: TextField(
-                          controller:
-                              TextEditingController(text: getJournalText()),
+                          // controller:  TextEditingController(text: journalText),                          
+                          // initialValue: journalText!.isNotEmpty ? journalText : '',
+                          controller: journalTextController,
                           keyboardType: TextInputType.multiline,
                           minLines: 28,
                           maxLines: null, //grow automatically
@@ -139,7 +201,7 @@ class _JournalPage extends State<JournalPage> {
                             contentPadding: const EdgeInsets.only(
                                 left: 10, right: 10, top: 20, bottom: 30),
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
+                              borderRadius: BorderRadius.circular(5),
                             ),
                           ),
                         ),
@@ -148,6 +210,7 @@ class _JournalPage extends State<JournalPage> {
                   ),
                 ),
               ),
+              debugShowCheckedModeBanner: false,
             ),
           ),
         );
