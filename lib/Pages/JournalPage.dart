@@ -22,7 +22,7 @@ class _JournalPage extends State<JournalPage> {
   _JournalPage();
 
   bool errorOccured = false;
-  String error = '';
+  String error = '';  
 
   // String? journalText = '';
 
@@ -44,9 +44,20 @@ class _JournalPage extends State<JournalPage> {
   Future<void> _handleMoodChanged(String? mood) async {
     final AppState appState = Provider.of<AppState>(context, listen: false);
     final Profile profile = Provider.of<Profile>(context, listen: false);
+    DayColorProvider provider = DayColorProvider(uid: profile.userId);
 
-    setState(() {
-      dropdownValue = mood;
+    Map<String, Color> moodMap = provider.getMoodColorMap();
+
+    Color tempColor = const Color(0xfffefefe);
+    // print(moodMap);
+    moodMap.forEach((key, value) => {
+        if(key == mood) tempColor = value
+      }
+    );
+
+    setState(() {      
+      dropdownValue = mood;      
+      appBarColor = tempColor;
     });
 
     DocumentReference? docRef =
@@ -61,10 +72,10 @@ class _JournalPage extends State<JournalPage> {
 
     List<DropdownMenuItem<String>> moodItems = moods
         .map<DropdownMenuItem<String>>(
-          (e) => DropdownMenuItem(
+          (e) =>  DropdownMenuItem(
             value: e,
             child: Text(e),
-          ),
+          ),          
         )
         .toList();
     _dropDownItems = moodItems;
@@ -84,13 +95,7 @@ class _JournalPage extends State<JournalPage> {
       .then((value) {
           var docs = value.docs;
           docs.forEach((element) {
-              var data = element.data();
-              // if(this.mounted) {
-              //     setState(() {
-              //   // journalText = data['Text'];  
-              //   // journalTextController.text = data['Text'];
-              //   });          
-              // }
+              var data = element.data();             
               journalTextController.text = data['Text'];
           });
         }
@@ -100,22 +105,9 @@ class _JournalPage extends State<JournalPage> {
 
   List<DropdownMenuItem<String>> _dropDownItems = [];
   String? dropdownValue;
+  Color? appBarColor;
 
   bool firstBuild = true;
-
-  // @override
-  // void initState() {
-  //   //loadDayColorMap();
-  //   super.initState();
-  // }
-
-
-  // @override
-  // void dispose() {
-  //   getJournalText().dispose();
-  //   super.dispose();    
-  // }
-
 
   @override
   Widget build(BuildContext context) {
@@ -125,16 +117,11 @@ class _JournalPage extends State<JournalPage> {
     _getDropDownItems();
     getJournalText();
 
-    // if(mounted){
-    //   getJournalText();
-    // }
 
     if (firstBuild) {
       dropdownValue = provider.getMoodForDay(appState.selectedDay);
-      // getJournalText();
+      appBarColor = provider.getColorForMood(dropdownValue);
     }
-
-    
 
     return Consumer<AppState>(
       builder:
@@ -147,21 +134,29 @@ class _JournalPage extends State<JournalPage> {
             child: MaterialApp(
               home: Scaffold(
                 appBar: AppBar(
-                  title: ElevatedButton(
+                  title: TextButton(
                     onPressed: () => _openCalendar(context),
-                    child: Text(
-                      DateFormat("MMMM d, yyyy").format(appState.selectedDay),
-                      style: const TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          DateFormat("MMMM d, yyyy").format(appState.selectedDay),
+                          style: const TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        ),
+                        const SizedBox(width: 5,),
+                        const Icon(Icons.calendar_month_outlined, color: Colors.white,)
+                      ],
                     ),
                     style: ElevatedButton.styleFrom(
-                        primary: const Color.fromARGB(255, 35, 83, 120)),
+                        primary: Colors.transparent),
                   ),
-                  centerTitle: false,
+                  centerTitle: true,
                   titleSpacing: 0.0,
-                  backgroundColor: const Color.fromARGB(255, 40, 88, 123),
+                  // backgroundColor: const Color.fromARGB(255, 40, 88, 123),
+                  backgroundColor: appBarColor,
                 ),
                 // floatingActionButton: FloatingActionButton(
                 //   onPressed: () {

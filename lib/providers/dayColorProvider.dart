@@ -77,4 +77,27 @@ class DayColorProvider {
     day = removeTimeFromDate(day);
     return _dayMoodMap[day];
   }
+
+  Map<String, Color> getMoodColorMap() {
+    return _moodColorMap;
+  }
+
+  Color getColorForMood(String? mood) {
+    
+    Color val = const Color(0xff3b3b58);
+
+    // print(mood);
+
+    _moodColorMap.forEach((key, value) {      
+      if(key == mood) { 
+        print('here');
+        val = value;        
+      }
+    });
+
+    // print(val);
+
+    return val;
+
+  }
 }
