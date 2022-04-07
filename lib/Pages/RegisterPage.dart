@@ -106,7 +106,7 @@ class _RegisterState extends State<Register> {
           "Moods": {}
         })
         .then((value) { 
-          print("Collection updated.");  
+          // print("Collection updated.");  
           FirebaseAuth.instance.signOut();
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const LoginPage(),));        
         })
@@ -114,7 +114,7 @@ class _RegisterState extends State<Register> {
           setState(() {
             errorOccured = true;  
             regError = error;
-            print(regError);
+            // print(regError);
           });      
         });
       } on FirebaseAuthException catch (e) {
