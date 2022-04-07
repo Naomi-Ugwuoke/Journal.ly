@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class DayColorProvider {
   static DayColorProvider? _dayColorProvider;
@@ -12,14 +11,14 @@ class DayColorProvider {
   late String uid;
 
   DayColorProvider._internal({required this.uid}) {
-    StartListening();
+    startListening();
   }
 
   factory DayColorProvider({required String uid}) {
     return _dayColorProvider ??= DayColorProvider._internal(uid: uid);
   }
 
-  StartListening() {
+  startListening() {
     listenForDayMoodMap();
     listenForMoodColorMap();
   }
@@ -53,7 +52,8 @@ class DayColorProvider {
       Map<String, dynamic> moodRGBMap = data['Moods'];
 
       moodRGBMap.forEach((key, value) {
-        newMap[key] = Color.fromRGBO(value[0], value[1], value[2], 128);
+        var color = '0xff' + value[0] + value[1] + value[2];
+        newMap[key] = Color(int.parse(color));
       });
       _moodColorMap = newMap;
     });

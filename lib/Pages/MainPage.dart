@@ -4,7 +4,9 @@ import 'package:the_bug_chasers/Pages/CalendarPage.dart';
 import 'package:the_bug_chasers/Pages/HomePage.dart';
 import 'package:the_bug_chasers/Pages/JournalPage.dart';
 import 'package:the_bug_chasers/Pages/SettingsPage.dart';
-import 'package:the_bug_chasers/providers/dayColorProvider.dart';
+import 'package:the_bug_chasers/User/AppState.dart';
+import 'package:the_bug_chasers/providers/DayColorProvider.dart';
+import 'package:the_bug_chasers/User/Profile.dart';
 
 class MyStatefulWidget extends StatefulWidget {
   const MyStatefulWidget({Key? key}) : super(key: key);
@@ -14,53 +16,76 @@ class MyStatefulWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  int _selectedIndex = 0;
-  static const String uid = 'Q4hNhfhskzTAfSFnaaXQaEYlp9E3';
-  static final _dayColorProvider = DayColorProvider(uid: uid);
+  // final Profile profile = Provider.of<Profile>(context, listen: false);
 
-  static final List<Widget> _widgetOptions = <Widget>[
-    const HomePage(),
-    const JournalPage(null),
-    CalendarPage(provider: _dayColorProvider),
-    const SettingsPage(),
-  ];
+  // static const String uid = profile.userId;
+  // static final _dayColorProvider = DayColorProvider(uid: uid);
+
+  // static final List<Widget> _widgetOptions = <Widget>[
+  //   const HomePage(),
+  //   const JournalPage(null),
+  //   CalendarPage(provider: _dayColorProvider),
+  //   const SettingsPage(),
+  // ];
+
+  // void _onItemTapped(int index) {
+  //   setState(() {
+  //     _selectedIndex = index;
+  //   });
+  // }
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    final AppState appState = Provider.of<AppState>(context, listen: false);
+    appState.visiblePageIndex = index;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+    final Profile profile = Provider.of<Profile>(context, listen: false);
+
+    String uid = profile.userId;
+    final _dayColorProvider = DayColorProvider(uid: uid);
+
+    final List<Widget> _widgetOptions = <Widget>[
+      const HomePage(),
+      JournalPage(DateTime.now()),
+      CalendarPage(provider: _dayColorProvider),
+      const SettingsPage(),
+    ];
+
+    return Consumer<AppState>(
+      builder:
+          (final BuildContext context, final AppState appState, final child) {
+        return Scaffold(
+          body: Center(
+            child: _widgetOptions.elementAt(appState.visiblePageIndex),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.book),
-            label: 'Journal',
+          bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.book),
+                label: 'Journal',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.calendar_view_month),
+                label: 'Calendar',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                label: 'Settings',
+              ),
+            ],
+            currentIndex: appState.visiblePageIndex,
+            selectedItemColor: Colors.amber[800],
+            onTap: _onItemTapped,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_view_month),
-            label: 'Calendar',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
-      ),
+        );
+      },
     );
   }
 }

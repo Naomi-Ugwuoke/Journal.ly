@@ -3,10 +3,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:the_bug_chasers/Pages/JournalPage.dart';
-import 'package:the_bug_chasers/providers/dayColorProvider.dart';
+// import 'package:the_bug_chasers/Pages/JournalPage.dart';
+import 'package:the_bug_chasers/User/AppState.dart';
+import 'package:the_bug_chasers/providers/DayColorProvider.dart';
 import '../Utils/DatabaseUtils.dart';
 import '../Utils/CalendarUtils.dart';
+
+import 'package:provider/provider.dart';
+import 'package:the_bug_chasers/User/AppState.dart';
 
 class CalendarPage extends StatefulWidget {
   final DayColorProvider provider;
@@ -46,15 +50,29 @@ class _CalendarPageState extends State<CalendarPage> {
     super.dispose();
   }
 
-  void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => JournalPage(focusedDay)),
-    );
-  }
+  // void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+
+  //   final AppState appState = Provider.of<AppState>(context, listen: false);
+  //   appState.selectedDay = focusedDay;
+  //   appState.visiblePageIndex = 1;
+  //   // Navigator.push(
+  //   //   context,
+  //   //   MaterialPageRoute(builder: (context) => JournalPage(focusedDay)),
+  //   // );
+  // }
 
   @override
   Widget build(BuildContext context) {
+    void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+      final AppState appState = Provider.of<AppState>(context, listen: false);
+      appState.selectedDay = focusedDay;
+      appState.visiblePageIndex = 1;
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => JournalPage(focusedDay)),
+      // );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Calendar'),
@@ -116,9 +134,7 @@ class _CalendarPageState extends State<CalendarPage> {
         (x) => x.day == day.day && x.month == day.month && x.year == day.year,
         orElse: () => DateTime(0));
 
-    Color color = DEFAULT_COLOR;
-
-    color = dayColors[key] ?? DEFAULT_COLOR;
+    Color color = dayColors[key] ?? DEFAULT_COLOR;
 
     var alpha = day.month == focusedDay.month ? 148 : 48;
     return color.withAlpha(alpha);
