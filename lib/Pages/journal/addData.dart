@@ -18,9 +18,12 @@ class _AddItemState extends State<AddItem> {
         elevation: 0,
         actionsIconTheme: const IconThemeData(color: Colors.black),
         iconTheme: const IconThemeData(color: Colors.white),
+        //save button
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              //CreateRecord();
+            },
             icon: const Icon(
               Icons.check,
               color: Colors.white,
@@ -32,20 +35,7 @@ class _AddItemState extends State<AddItem> {
       body: SafeArea(
         child: Column(children: [
           //starting words
-          TextFormField(
-            style: const TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 20,
-            ),
-            decoration: const InputDecoration(
-                hintText: "Title",
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                )),
-          ),
+
           const SizedBox(
             height: 20,
           ),
@@ -68,3 +58,13 @@ class _AddItemState extends State<AddItem> {
     );
   }
 }
+  //save to database
+  /*void CreateRecord() {
+    
+    
+  },
+  void getData(){
+
+  },
+  */
+
