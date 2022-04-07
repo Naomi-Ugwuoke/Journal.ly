@@ -103,7 +103,7 @@ class _MoodContainerState extends State<MoodContainer> {
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 175,
                 childAspectRatio: showOptions ? 1 : 3/2,
-                crossAxisSpacing: 20,
+                crossAxisSpacing: 25,
                 mainAxisSpacing: 20), 
               itemCount: moods.length,  
               physics: const ScrollPhysics(),              
