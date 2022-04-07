@@ -10,6 +10,9 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
+
+  final Color _themeColor =const Color(0xff3b3b58);
+
   Widget navigateButton(String next) {
     return next == 'login' ? 
       ElevatedButton(
@@ -25,25 +28,27 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           ),
         ),
         style: ButtonStyle(shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),            
-          )
-        )),
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25),            
+            ),                    
+          ),
+          backgroundColor: MaterialStateProperty.all<Color>(_themeColor)
+        ),
       ) :      
       OutlinedButton(
         onPressed: (() {
           Navigator.push(context, MaterialPageRoute(builder: (context) => const Register()));          
         }), 
-        child: const Padding(
-          padding:  EdgeInsets.all(10.0),
-          child:  Text('Register'),
+        child: Padding(
+          padding: const  EdgeInsets.all(10.0),
+          child:  Text('Register', style: TextStyle(color: _themeColor))
         ),
         style: ButtonStyle(shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18),
-            side: const BorderSide(color: Colors.white)            
-          )
-        )),
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18),            
+            ),                    
+          ),          
+        ),
       );
   }
 
@@ -51,18 +56,18 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      color: const Color(0xff1d263b),      
+      
       alignment: Alignment.center,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image.asset('assets/imgs/home-illustration.png'),
+          Image.asset('assets/imgs/home-logo.png'),
           const SizedBox(
            height: 50, 
           ),
-          const Text('Journal.ly', style: TextStyle(
-            color: Colors.white,
+          Text('Journal.ly', style: TextStyle(
+            color: _themeColor,
             fontSize: 32,
             fontWeight: FontWeight.bold
           )),
@@ -73,7 +78,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           Column(
             children: [
               const SizedBox(height: 30,),
-              const Text('Already have an account?', style: TextStyle(color: Colors.white),),
+              Text('Already have an account?', style: TextStyle(color: _themeColor),),
               const SizedBox(height: 15,),
               navigateButton('register')
             ],
