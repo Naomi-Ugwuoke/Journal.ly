@@ -123,6 +123,7 @@ class _UsersMoodsState extends State<UsersMoods> {
               TextButton(
                 onPressed: () {
                   final AppState appState = Provider.of<AppState>(context, listen: false);
+                  appState.autoFocus = 'mood';
                   appState.visiblePageIndex = 3;
                 }, 
                 child: const Text('View All'),                  

@@ -11,8 +11,18 @@ class AppState extends ChangeNotifier {
 
   late DayColorProvider _provider;
 
+  String _autoFocus = 'null';
+
   DayColorProvider get provider {
     return _provider;
+  }
+
+  set autoFocus(String val) {
+    _autoFocus = val;
+  }
+
+  String get autoFocus {
+    return _autoFocus;
   }
 
   set provider(DayColorProvider providerArg) {

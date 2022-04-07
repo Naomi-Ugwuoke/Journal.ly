@@ -5,6 +5,7 @@ import 'package:the_bug_chasers/Pages/AccountSettings.dart';
 import 'package:the_bug_chasers/Pages/JournalSettings.dart';
 import 'package:provider/provider.dart';
 import 'package:the_bug_chasers/Pages/MoodSettings.dart';
+import 'package:the_bug_chasers/User/AppState.dart';
 import 'package:the_bug_chasers/User/Profile.dart';
 import 'package:the_bug_chasers/main.dart';
 
@@ -12,6 +13,7 @@ import 'package:provider/provider.dart';
 import 'package:the_bug_chasers/User/Profile.dart';
 
 class SettingsPage extends StatelessWidget {
+
   const SettingsPage({Key? key}) : super(key: key);
 
   final Color _themeColor =const Color(0xff3b3b58);
@@ -19,9 +21,13 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    const Color _themeColor =  Color(0xff3b3b58);
+    const Color _themeColor =  Color(0xff3b3b58);    
 
     return Consumer<Profile>(builder: (context, Profile profile, child) {
+
+      final AppState appState = Provider.of<AppState>(context, listen: false);
+      String autoFocus = appState.autoFocus;      
+
       return Scaffold(
         appBar: AppBar(
           title: const Text('Settings'),
@@ -62,13 +68,15 @@ class SettingsPage extends StatelessWidget {
                     ListTile(
                       leading: const Icon(Icons.account_circle_outlined),                      
                       title: const Text('Account Settings'),
+                      // autofocus: autoFocus == 'account' ? true : false,
                       onTap: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => const AccountSettings()));      
                       },
                     ), 
                     const Divider(color: Color(0xffbfbfbf), thickness: 0.5),
                     ListTile(
-                      leading: const Icon(Icons.book_outlined),                      
+                      leading: const Icon(Icons.book_outlined),    
+                      // autofocus: autoFocus == 'journal' ? true : false,                  
                       title: const Text('Journal Settings'),
                       onTap: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => const JournalSettings()));      
@@ -76,15 +84,18 @@ class SettingsPage extends StatelessWidget {
                     ),
                     const Divider(color: Color(0xffbfbfbf), thickness: 0.5),
                     ListTile(
-                      leading: const Icon(Icons.emoji_emotions_outlined),                      
-                      title: const Text('Moods Settings'),
+                      leading: const Icon(Icons.emoji_emotions_outlined),   
+                      autofocus: autoFocus == 'mood' ? true : false,                   
+                      focusColor: const Color(0xffff0000),                      
+                      title: const Text('Moods Settings'),                      
                       onTap: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => const MoodSettingsPage()));      
                       },
                     ),
                     const Divider(color: Color(0xffbfbfbf), thickness: 0.5),
                     ListTile(
-                      leading: const Icon(Icons.help),                      
+                      leading: const Icon(Icons.help),     
+                      // autofocus: autoFocus == 'help' ? true : false,                 
                       title: const Text('Help'),
                       onTap: () {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => const AccountSettings()));      
@@ -92,7 +103,7 @@ class SettingsPage extends StatelessWidget {
                     ),                    
                     ListTile(
                       // contentPadding: const EdgeInsets.all(2),
-                      leading: const Icon(Icons.logout, color: Colors.white,),                      
+                      leading: const Icon(Icons.logout, color: Colors.white,),                           
                       title: const Text('Logout'),
                       tileColor: Colors.red,
                       textColor: Colors.white,
