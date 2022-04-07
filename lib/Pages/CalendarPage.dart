@@ -26,16 +26,10 @@ class _CalendarPageState extends State<CalendarPage> {
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   late final PageController _pageController;
-
   final ValueNotifier<DateTime> _focusedDay = ValueNotifier(DateTime.now());
-  final Set<DateTime> _selectedDays = LinkedHashSet<DateTime>(
-    equals: isSameDay,
-    hashCode: getHashCode,
-  );
   CalendarFormat _calendarFormat = CalendarFormat.month;
   final RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.disabled;
 
-  Map<DateTime, Color> _dayColors = {};
   Color DEFAULT_COLOR = Colors.grey.withAlpha(148);
 
   @override
@@ -50,83 +44,73 @@ class _CalendarPageState extends State<CalendarPage> {
     super.dispose();
   }
 
-  // void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
-
-  //   final AppState appState = Provider.of<AppState>(context, listen: false);
-  //   appState.selectedDay = focusedDay;
-  //   appState.visiblePageIndex = 1;
-  //   // Navigator.push(
-  //   //   context,
-  //   //   MaterialPageRoute(builder: (context) => JournalPage(focusedDay)),
-  //   // );
-  // }
-
   @override
   Widget build(BuildContext context) {
-    void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
-      final AppState appState = Provider.of<AppState>(context, listen: false);
-      appState.selectedDay = focusedDay;
-      appState.visiblePageIndex = 1;
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => JournalPage(focusedDay)),
-      // );
-    }
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Calendar'),
-        centerTitle: true,
-        backgroundColor: const Color(0xff28587b),
-      ),
-      body: Column(
-        children: [
-          TableCalendar<Event>(
-            firstDay: kFirstDay,
-            lastDay: kLastDay,
-            focusedDay: _focusedDay.value,
-            headerVisible: true,
-            headerStyle: const HeaderStyle(
-              formatButtonVisible: false,
-            ),
-            calendarFormat: _calendarFormat,
-            rangeSelectionMode: _rangeSelectionMode,
-            onDaySelected: _onDaySelected,
-            onCalendarCreated: (controller) => _pageController = controller,
-            onPageChanged: (focusedDay) => _focusedDay.value = focusedDay,
-            onFormatChanged: (format) {
-              if (_calendarFormat != format) {
-                setState(() => _calendarFormat = format);
-              }
-            },
-            calendarBuilders: CalendarBuilders(
-              prioritizedBuilder: (context, day, focusedDay) {
-                return Container(
-                  height: 48,
-                  width: 48,
-                  color: getColorForDay(day, focusedDay),
-                  padding: const EdgeInsets.all(0.5),
-                  alignment: Alignment.center,
-                  child: Text(day.day.toString(),
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline4!
-                          .copyWith(color: Colors.black)),
-                );
-              },
-            ),
+    return Consumer<AppState>(
+      builder:
+          (final BuildContext context, final AppState appState, final child) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Calendar'),
+            centerTitle: true,
+            backgroundColor: const Color(0xff28587b),
           ),
-        ],
-      ),
+          body: Column(
+            children: [
+              TableCalendar<Event>(
+                firstDay: kFirstDay,
+                lastDay: kLastDay,
+                focusedDay: appState.focusedDay,
+                headerVisible: true,
+                headerStyle: const HeaderStyle(
+                  formatButtonVisible: false,
+                ),
+                calendarFormat: _calendarFormat,
+                rangeSelectionMode: _rangeSelectionMode,
+                onDaySelected: _onDaySelected,
+                onCalendarCreated: (controller) => _pageController = controller,
+                onPageChanged: _onFocusedDayChanged,
+                onFormatChanged: (format) {
+                  if (_calendarFormat != format) {
+                    setState(() => _calendarFormat = format);
+                  }
+                },
+                calendarBuilders: CalendarBuilders(
+                  prioritizedBuilder: (context, day, focusedDay) {
+                    return Container(
+                      height: 48,
+                      width: 48,
+                      padding: const EdgeInsets.all(0.5),
+                      alignment: Alignment.center,
+                      decoration: getDecoration(day, focusedDay),
+                      child: Text(day.day.toString(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline4!
+                              .copyWith(color: Colors.black)),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 
-  // loadDayColorMap() async {
-  //   var dayColorMap = await getDayColorMap(userID, DEFAULT_COLOR);
-  //   setState(() {
-  //     _dayColors = dayColorMap;
-  //   });
-  // }
+  getDecoration(DateTime day, focusedDay) {
+    var today = DateTime.now();
+    if (day.day != today.day ||
+        day.year != today.year ||
+        day.month != today.month) {
+      return BoxDecoration(color: getColorForDay(day, focusedDay));
+    }
+
+    return BoxDecoration(
+        border: Border.all(width: 4, color: Colors.amber),
+        color: getColorForDay(day, focusedDay));
+  }
 
   getColorForDay(DateTime day, DateTime focusedDay) {
     var dayColors = provider.getDayColorMap();
@@ -138,5 +122,16 @@ class _CalendarPageState extends State<CalendarPage> {
 
     var alpha = day.month == focusedDay.month ? 148 : 48;
     return color.withAlpha(alpha);
+  }
+
+  void _onFocusedDayChanged(DateTime focusedDay) {
+    final AppState appState = Provider.of<AppState>(context, listen: false);
+    appState.focusedDay = focusedDay;
+  }
+
+  void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+    final AppState appState = Provider.of<AppState>(context, listen: false);
+    appState.selectedDay = selectedDay;
+    appState.visiblePageIndex = 1;
   }
 }
