@@ -90,7 +90,7 @@ class DayColorProvider {
 
     _moodColorMap.forEach((key, value) {      
       if(key == mood) { 
-        print('here');
+        // print('here');
         val = value;        
       }
     });
