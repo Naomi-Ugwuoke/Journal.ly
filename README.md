@@ -2,11 +2,7 @@ The Bug Chasers
 
 Daily Wellness App
 
-Lewis Crabtree - 300147067  
-Ishan Sahota - 300167203  
-Naomi Ugwuoke - 300177027
-Manish Raj - 300176511
-Aarushi Avarsekar - 300186589
+Contributors: Lewis Crabtree, Ishan Sahota, Naomi Ugwuoke, Manish Raj, Aarushi Avarsekar 
 
 Journal.ly is an application where every user can create an account, and begin their journey to journalling. Journalling allows people to be more conscientious about their day-to-day routines. The users can look back at the app and make a note of their habits and progress. Journal.ly will help users monitor their daily mood patterns.mJournal.ly provides its users with features for mood-tracking, progress reports, reminders, and daily-entry journals.
 
